@@ -1,0 +1,297 @@
+<body class="edit">
+	<!-- 左侧菜单 -->
+	<div class="sidebar-upload">	
+		<div class="logo-upload">
+			<a href="/" class="luo">
+				<img src="/images/logo.png" alt="logo">
+			</a>
+		</div>
+		<ul class="add-element">
+			<li class="add-text">
+				<i class="fa fa-text-width fa-2x"></i>
+				<p>文字</p>
+			</li>
+			<li class="add-img">
+				<i class="fa fa-photo fa-2x"></i>
+				<p>图片</p>
+				<input type="file" class="add-img-input" accept="image/png,image/jpeg,image/gif">
+			</li>
+			<li class="add-svg">
+				<i class="fa fa-file-text fa-2x"></i>
+				<p>SVG</p>
+				{{!-- <input type="file" class="add-img-input" accept="image/png,image/jpeg,image/gif"> --}}
+			</li>
+		</ul>
+	</div>
+	<div class="content-main-upload">
+		<div class="edit-menu">
+			<div class="panel-action">
+				<button class="action-undo">
+					<i class="fa fa-backward"></i>
+				</button>
+				<button class="action-redo">
+					<i class="fa fa-forward"></i>
+				</button>
+				<!--禁用缩放功能 
+				<button class="action-zoomin">
+					<i class="fa fa-plus-circle"></i>
+				</button>
+				<button class="action-zoomout">
+					<i class="fa fa-minus-circle"></i>
+				</button>
+				<span class="view-percent">100%</span> -->
+			</div>
+			<div class="panel-tabs">
+				<button class="the-front panel-tabs-active">正面</button>
+				<button class="the-opsite">反面</button>
+			</div>
+			<div class="panel-submit">
+				<button class="submit button-green">
+					<i class="fa fa-upload"></i>上传模板
+				</button>
+			</div>
+		</div>
+
+		<!-- 画布 -->
+		<div class="canvas-wrapper">
+			<div class="edit-canvas">
+				<div class="side-front">
+					<div class="edit-elem edit-text default-text" contenteditable="true">心方设计</div>
+					<div class="edit-elem edit-image default-image"></div>
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740px" height="457px">
+						<path class="edit-elem edit-svg" cx="60" fill-rule="evenodd"  fill="rgb(3, 3, 3)"
+						 d="M0.000,-0.000 L151.000,-0.000 L151.000,111.000 L0.000,111.000 L0.000,-0.000 Z"/>
+					</svg>
+				</div>
+				<div class="side-back">
+					<div class="edit-elem edit-text default-text" contenteditable="true" style="top: 200px">JesseLuo</div>
+				</div>
+			</div>
+			
+			<!-- 图片编辑面板 -->
+			<div class="edit-toolbar edit-toolbar-image">
+					<div class="change-image"  data-tooltip="替换图片">
+						<i class="fa fa-photo"></i>
+						<div class="input-wrapper">
+							<input type="file" class="replace-img" accept="image/png,image/jpeg,image/gif">
+						</div>
+					</div>
+					<div class="edit-transparent">
+						<i class="fa fa-adjust"></i>
+						<input type="text" value="100%" class="transparent-input">
+					</div>
+					<div class="edit-copy"  data-tooltip= "复制">
+						<i class="fa fa-copy"></i>
+					</div>
+					<div class="edit-putup"  data-tooltip= "置顶">
+						<i class="fa fa-arrow-up"></i>
+					</div>
+					<div class="edit-putdown"  data-tooltip = "置底">
+						<i class="fa fa-arrow-down"></i>
+					</div>
+					<div class="edit-delete"  data-tooltip= "删除">
+						<i class="fa fa-trash"></i>
+					</div>
+			</div>
+			<!-- 文字编辑面板 -->
+			<div class="edit-toolbar edit-toolbar-text">
+					<div class="edit-text" data-tooltip="编辑文字">
+						<i class="fa fa-edit"></i>
+					</div>
+					<div class="edit-color" >
+						<input type="color">
+					</div>
+					<div class="edit-fontfamily">
+						<span>微软雅黑</span>
+					</div>
+					<div class="edit-fontsize">
+						<span>30</span>
+					</div>
+					<div class="edit-transparent">
+						<i class="fa fa-adjust"></i>
+						<input type="text" value="100%" class="transparent-input">
+					</div>
+					<div class="edit-copy" data-tooltip="复制">
+						<i class="fa fa-copy"></i>
+					</div>
+					<div class="edit-putup" data-tooltip="置顶">
+						<i class="fa fa-arrow-up"></i>
+					</div>
+					<div class="edit-putdown" data-tooltip="置底">
+						<i class="fa fa-arrow-down"></i>
+					</div>
+					<div class="edit-fontitaly" data-tooltip="斜体">
+						<i class="fa fa-italic"></i>
+					</div>
+					<div class="edit-fontunderline" data-tooltip="下划线">
+						<i class="fa fa-underline"></i>
+					</div>
+					<div class="edit-fontbold" data-tooltip="加粗">
+						<i class="fa fa-bold"></i>
+					</div>
+					<div class="edit-delete" data-tooltip="删除">
+						<i class="fa fa-trash"></i>
+					</div>
+			</div>
+			{{!-- svg边距面板 --}}
+			<div class="edit-toolbar edit-toolbar-svg">
+					<div class="edit-color" >
+						<input type="color">
+					</div>
+					<div class="edit-transparent">
+						<i class="fa fa-adjust"></i>
+						<input type="text" value="100%" class="transparent-input">
+					</div>
+					<div class="edit-copy"  data-tooltip= "复制">
+						<i class="fa fa-copy"></i>
+					</div>
+					<div class="edit-putup"  data-tooltip= "置顶">
+						<i class="fa fa-arrow-up"></i>
+					</div>
+					<div class="edit-putdown"  data-tooltip = "置底">
+						<i class="fa fa-arrow-down"></i>
+					</div>
+					<div class="edit-delete"  data-tooltip= "删除">
+						<i class="fa fa-trash"></i>
+					</div>
+			</div>
+			<!-- 透明度滑块 -->
+			<div class="edit-controler transparent-range">
+				<div class="range-circle"></div>
+			</div>
+			<!-- 字体选择器 -->
+			<div class="edit-controler font-selectbar family-select">
+				<ul>
+					<li>
+						微软雅黑
+					</li>
+					<li>
+						宋体
+					</li>
+					<li>
+						黑体
+					</li>
+					<li>
+						楷体
+					</li>
+				</ul>
+			</div>
+			<!-- 字号选择器 -->
+			<div class="edit-controler font-selectbar size-select">
+				<ul>
+					<li>
+						12
+					</li>
+					<li>
+						14
+					</li>
+					<li>
+						16
+					</li>
+					<li>
+						18
+					</li>
+					<li>
+						20
+					</li>
+					<li>
+						22
+					</li>
+					<li>
+						24
+					</li>
+					<li>
+						26
+					</li>
+					<li>
+						28
+					</li>
+					<li>
+						30
+					</li>
+					<li>
+						32
+					</li>
+					<li>
+						34
+					</li>
+					<li>
+						36
+					</li>
+				</ul>
+			</div>
+			<!-- 变换框 -->
+			<div class="edit-transformer">
+				<div class="move ">
+					<i class="fa fa-arrows"></i>
+				</div>
+				<div class="rotate">
+					<i class="fa fa-repeat"></i>
+				</div>
+				<div class="scale">
+					<i class="fa fa-arrows-alt"></i>
+				</div>
+				<div class="cancel">
+					<i class="fa fa-close"></i>
+				</div>
+				<!-- <div class="nw"></div>
+				<div class="nm"></div>
+				<div class="ne"></div>
+				<div class="mw"></div>
+				<div class="me"></div>
+				<div class="sw"></div>
+				<div class="sm"></div>
+				<div class="se"></div>
+				<div class="r">
+					<i class="fa fa-rotate-right"></i>
+				</div> -->
+			</div>
+		</div>
+		<div class="edit-info">
+			740&nbsp;X&nbsp;457
+		</div>
+	</div>
+	<div class="mask">
+		<div class="pop">
+			<div class="pop-title">
+				选择类型
+			</div>
+			<div class="pop-content">
+				<form id="form">
+					<div class="type-title">
+						<label for="title">标题</label>
+						<input type="text" name="title" value="心方名片" placeholder="请输入名片标题" id="title">
+					</div>
+					<div class="type-theme">
+						<label>主题</label>
+						<input type="radio" value="business" name="theme" checked id="business">
+						<label for="business">商务</label>
+						<input type="radio" value="personality" name="theme" id="personality">
+						<label for="personality">个性</label>
+
+					</div>
+					<div class="type-size">
+						<label>尺寸</label>
+						<input type="radio" value="horizon" name="size" checked="" id="horizon">
+						<label for="">横版</label>
+						<input type="radio" value="vertical" name="size">
+						<label for="">竖版</label>
+					</div>
+				</form>
+			</div>
+			<div class="pop-buttons">
+				<button class="pop-cancel button-grey">取消</button>
+				<button class="pop-confirm button-green">确定</button>
+			</div>
+		</div>
+	</div>
+	<script src="/javascripts/thirdjs/jszip.js"></script>
+	<script src="/javascripts/thirdjs/html2canvas.js"></script>
+	<script src="/javascripts/editCanvas.js"></script>
+	<script src="/javascripts/main.js"></script>
+	<script src="/javascripts/upload.js"></script>
+	<script src="/javascripts/svgEdit.js"></script>
+	<script>
+		
+	</script>
+</body>

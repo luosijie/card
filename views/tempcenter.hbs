@@ -1,0 +1,85 @@
+<body>
+	<header class="template">
+		<div class="container">
+			<div class="logo">
+				<img src="/images/logo_home.png" alt="">
+
+			</div>
+			
+			<div class="log-reg">
+				<div class="logined">
+					<img src="/images/img_mine.png" alt="">
+					<span class="user-name">JesseLuo</span>
+				</div>
+				<div class="no-login">
+					<button class="login button-green">注册</button>
+					<button class="reg button-green">登录</button>
+				</div>
+			</div>
+			<ul class="menu">
+				<li><a href="/">首页</a></li>
+				<li><a href="/edituser">编辑器</a></li>
+				<li><a href="/tempcenter" class="active">模板中心</a></li>
+				<li>联系我</li>
+			</ul>
+
+		</div>
+	</header>
+	<section class="category">
+		<div class="container">
+			<span>主题分类</span>
+			<ul class="category-menu">
+				<li class="active" type="all">
+						全部
+				</li>
+				<li type="business">
+						商务
+				</li>
+				<li type="personality">
+						个性
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section class="all-temp">
+		<div class="container">
+			<div class="temp-list">
+				<ul>
+					{{#each card}}
+						<li>
+							<a href="/edituser/{{_id}}">
+								<img src="/coverImg/{{coverFront}}" alt="">
+								<p>{{title}}</p>
+							</a>
+						</li>
+					{{/each}}
+					{{!-- <li>
+						<img src="/images/temp_default.png" alt="">
+						<p>简约商务名片</p>
+					</li> --}}
+				</ul>
+			</div>	
+		</div>
+	</section>
+	<footer class="template">
+		<p>Copyright©luosj.cn 闽ICP备10047083号</p>
+	</footer>
+	<script id="card_template" type="text/x-handlebars-template">
+		<ul>
+			\{{#each this}}
+				<li>
+					<a href="/edituser/\{{_id}}">
+						<img src="/coverImg/\{{coverFront}}" alt="">
+						<p>\{{title}}</p>
+					</a>
+				</li>
+			\{{/each}}
+			{{!-- <li>
+				<img src="/images/temp_default.png" alt="">
+				<p>简约商务名片</p>
+			</li> --}}
+		</ul>
+	</script>
+	<script src="/javascripts/thirdjs/handlebars-v4.0.5.js"></script>
+	<script src="/javascripts/getCards.js"></script>
+</body>

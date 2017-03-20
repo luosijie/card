@@ -1,0 +1,271 @@
+<body class="edit">
+	<!-- 左侧菜单 -->
+	<div class="sidebar-user">
+		<div class="sidebar-header">	
+			<div class="logo-edit">
+				<a href="/" class="luo">
+					<img src="/images/logo.png" alt="logo">
+					<span>心方设计</span>
+				</a>
+			</div>
+		</div>	
+		<div class="type">	
+			<div class="thame">
+				<span>全部主题</span> 
+				<i class="fa fa-angle-down"></i>
+				<ul class="thame-list">
+					<li type="all">全部主题</li>
+					<li type="business">商务</li>
+					<li type="personality">个性</li>
+				</ul>
+			</div>
+			<div class="size">	
+				<span>全部尺寸</span>
+				<i class="fa fa-angle-down"></i>
+				<ul class="size-list">
+					<li>全部尺寸</li>
+				</ul>
+			</div>
+		</div>
+		<div class="template-container">
+			<ul class="template">
+			 {{#each tempCards}}
+				<li data-id="{{_id}}">
+					<img src="/coverImg/{{coverFront}}" alt="">
+				</li data-id="{{_id}}">
+			 {{/each}}
+			</ul>
+		</div>
+		
+	</div>
+	<div class="content-main-user">
+		<div class="edit-menu">
+			<div class="panel-action">
+				<button class="action-undo">
+					<i class="fa fa-backward"></i>
+				</button>
+				<button class="action-redo">
+					<i class="fa fa-forward"></i>
+				</button>
+				<!--禁用缩放功能 
+				<button class="action-zoomin">
+					<i class="fa fa-plus-circle"></i>
+				</button>
+				<button class="action-zoomout">
+					<i class="fa fa-minus-circle"></i>
+				</button>
+				<span class="view-percent">100%</span> -->
+			</div>
+			<div class="panel-tabs">
+				<button class="the-front panel-tabs-active">正面</button>
+				<button class="the-opsite">反面</button>
+			</div>
+			<div class="panel-submit">
+				<button class="save button-green">
+					<i class="fa fa-save"></i>保存
+				</button>
+			</div>
+		</div>
+
+		<!-- 画布 -->
+		<div class="canvas-wrapper">
+			<div class="edit-canvas">
+				{{#if editCard}}
+					<div class="side-front">
+						{{{editCard.sideFront}}}
+					</div>
+					<div class="side-back">
+						{{{editCard.sideBack}}}
+					</div>
+	
+				{{else}}
+					<div class="side-front">
+						<div class="edit-elem edit-text default-text" contenteditable="true">心方设计</div>
+						<div class="edit-elem edit-image default-image"></div>
+					</div>
+					<div class="side-back">
+						<div class="edit-elem edit-text default-text" contenteditable="true" style="top: 200px">JesseLuo</div>
+					</div>
+				{{/if}}
+			</div>
+			
+			<!-- 图片编辑面板 -->
+			<div class="edit-toolbar edit-toolbar-image">
+					<div class="change-image"  data-tooltip="替换图片">
+						<i class="fa fa-photo"></i>
+						<div class="input-wrapper">
+							<input type="file" class="replace-img" accept="image/png,image/jpeg,image/gif">
+						</div>
+					</div>
+					<div class="edit-transparent">
+						<i class="fa fa-adjust"></i>
+						<input type="text" value="100%" class="transparent-input">
+					</div>
+					<div class="edit-copy"  data-tooltip= "复制">
+						<i class="fa fa-copy"></i>
+					</div>
+					<div class="edit-putup"  data-tooltip= "置顶">
+						<i class="fa fa-arrow-up"></i>
+					</div>
+					<div class="edit-putdown"  data-tooltip = "置底">
+						<i class="fa fa-arrow-down"></i>
+					</div>
+					<div class="edit-delete"  data-tooltip= "删除">
+						<i class="fa fa-trash"></i>
+					</div>
+			</div>
+			<!-- 文字编辑面板 -->
+			<div class="edit-toolbar edit-toolbar-text">
+					<div class="edit-text" data-tooltip="编辑文字">
+						<i class="fa fa-edit"></i>
+					</div>
+					<div class="edit-color" >
+						<input type="color">
+					</div>
+					<div class="edit-fontfamily">
+						<span>微软雅黑</span>
+					</div>
+					<div class="edit-fontsize">
+						<span>30</span>
+					</div>
+					<div class="edit-transparent">
+						<i class="fa fa-adjust"></i>
+						<input type="text" value="100%" class="transparent-input">
+					</div>
+					<div class="edit-copy" data-tooltip="复制">
+						<i class="fa fa-copy"></i>
+					</div>
+					<div class="edit-putup" data-tooltip="置顶">
+						<i class="fa fa-arrow-up"></i>
+					</div>
+					<div class="edit-putdown" data-tooltip="置底">
+						<i class="fa fa-arrow-down"></i>
+					</div>
+					<div class="edit-fontitaly" data-tooltip="斜体">
+						<i class="fa fa-italic"></i>
+					</div>
+					<div class="edit-fontunderline" data-tooltip="下划线">
+						<i class="fa fa-underline"></i>
+					</div>
+					<div class="edit-fontbold" data-tooltip="加粗">
+						<i class="fa fa-bold"></i>
+					</div>
+					<div class="edit-delete" data-tooltip="删除">
+						<i class="fa fa-trash"></i>
+					</div>
+			</div>
+			<!-- 透明度滑块 -->
+			<div class="edit-controler transparent-range">
+				<div class="range-circle"></div>
+			</div>
+			<!-- 字体选择器 -->
+			<div class="edit-controler font-selectbar family-select">
+				<ul>
+					<li>
+						微软雅黑
+					</li>
+					<li>
+						宋体
+					</li>
+					<li>
+						黑体
+					</li>
+					<li>
+						楷体
+					</li>
+				</ul>
+			</div>
+			<!-- 字号选择器 -->
+			<div class="edit-controler font-selectbar size-select">
+				<ul>
+					<li>
+						12
+					</li>
+					<li>
+						14
+					</li>
+					<li>
+						16
+					</li>
+					<li>
+						18
+					</li>
+					<li>
+						20
+					</li>
+					<li>
+						22
+					</li>
+					<li>
+						24
+					</li>
+					<li>
+						26
+					</li>
+					<li>
+						28
+					</li>
+					<li>
+						30
+					</li>
+					<li>
+						32
+					</li>
+					<li>
+						34
+					</li>
+					<li>
+						36
+					</li>
+				</ul>
+			</div>
+			<!-- 变换框 -->
+			<div class="edit-transformer">
+				<div class="move ">
+					<i class="fa fa-arrows"></i>
+				</div>
+				<div class="rotate">
+					<i class="fa fa-repeat"></i>
+				</div>
+				<div class="scale">
+					<i class="fa fa-arrows-alt"></i>
+				</div>
+				<div class="cancel">
+					<i class="fa fa-close"></i>
+				</div>
+				<!-- <div class="nw"></div>
+				<div class="nm"></div>
+				<div class="ne"></div>
+				<div class="mw"></div>
+				<div class="me"></div>
+				<div class="sw"></div>
+				<div class="sm"></div>
+				<div class="se"></div>
+				<div class="r">
+					<i class="fa fa-rotate-right"></i>
+				</div> -->
+			</div>
+		</div>
+		<div class="edit-info">
+			740&nbsp;X&nbsp;457
+		</div>
+	</div>
+	<script id="edit_card_template" type="text/x-handlebars-template">
+			 \{{#each this}}
+				<li data-id="\{{_id}}">
+					<img src="/coverImg/\{{coverFront}}" alt="">
+				</li>
+			 \{{/each}}
+	</script>
+	<script src="/javascripts/thirdjs/handlebars-v4.0.5.js"></script>
+	<!-- 引入第三方插件html2canvas实现html转换图片 -->
+	<script src="/javascripts/thirdjs/html2canvas.js"></script>
+	<!-- 引入jszip实现图片打包下载 -->
+	<script src='/javascripts/thirdjs/jszip.js'></script>
+	<!-- 引入FileSaver本地保存图图片 -->
+	<script src='/javascripts/thirdjs/FileSaver.js'></script>
+	<script src="/javascripts/editCanvas.js"></script>
+	<script src="/javascripts/main.js"></script>
+	<script src="/javascripts/getCards.js"></script>
+
+</body>

@@ -1,0 +1,174 @@
+<body>
+<header>
+		<div class="container">
+			<div class="logo">
+				<img src="images/logo_home.png" alt="">
+
+			</div>
+			
+			<div class="log-reg">
+				<div class="logined">
+					<img src="images/img_mine.png" alt="">
+					<span class="user-name">JesseLuo</span>
+				</div>
+				<div class="no-login">
+					<button class="login button-green">注册</button>
+					<button class="reg button-green">登录</button>
+				</div>
+			</div>
+			<ul class="menu">
+				<li><a href="/" class="active">首页</a></li>
+				<li><a href="/edituser">编辑器</a></li>
+				<li><a href="/tempcenter">模板中心</a></li>
+				<li>联系我</li>
+			</ul>
+
+		</div>
+
+	</header>
+	<section class="banner">
+		<div class="container">
+			<div class="title">
+				极简的名片设计工具
+			</div>
+			<div class="sub-title">
+				丰富场景	精致模板	便捷操作	一键输出
+			</div>
+			<a href="/edituser">
+				<button class="start button-green">
+					开始我的设计
+				</button>
+			</a>
+		</div>
+	</section>
+	<section class="selected-temp">
+		<div class="container">
+			<div class="temp-title">
+				精选模板
+			</div>
+			<div class="temp-sub-title">
+				seleted template
+			</div>
+			<ul class="temp-type">
+				<li class="business">商务</li>
+				<li class="personality">个性</li>
+				<div class="slide-blok"></div>
+			</ul>
+			<div class="temp-list">
+				<ul class="slide-content temp-business">
+					{{#each business}}
+							<li>
+								<a href="/edituser/{{_id}}">
+									<img src="coverImg/{{coverFront}}" alt="">
+									<p>{{title}}</p>
+								</a>
+							</li>
+							
+					{{/each}}
+					{{!-- 
+					<li>
+						<img src="coverImg/temp_default.png" alt="">
+						<p>简约商务名片</p>
+					</li> --}}
+				</ul>
+				<ul class="slide-content temp-personality">
+					{{#each personality}}
+							<li>
+								<a href="/edituser/{{_id}}">
+									<img src="coverImg/{{coverFront}}" alt="">
+									<p>{{title}}</p>
+								</a>
+							</li>
+					{{/each}}
+					{{!-- <div class="loader">	
+						<i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+						<p>加载中...</p>
+					</div> --}}
+				</ul>
+				
+			</div>
+			
+				<button class="check-more button-grey">
+					<a href="/tempcenter">查看更多</a>
+				</button>
+			
+			
+		</div>
+	</section>
+	<footer class="info">
+		<div class="container">
+			<div class="site-info">
+				<img src="images/logo_home_footer.png" alt="">
+				<p>Copyright©luosj.cn 闽ICP备10047083号</p>
+			</div>
+			<div class="author-info">
+				<img src="images/img_mine.png" alt="">
+				<div class="detail">
+					<div class="name">Jesse Luo</div>
+					<p>网站作者</p>
+					<p class="des">
+						专注UI设计，热衷于运用图形界面和前端技术提高用户体检，热爱生活，喜欢运动
+					</p>
+				</div>		
+			</div> 
+
+		</div>
+	</footer>
+	<div class="mask login-reg-pop">
+		<div class="login-reg-container">	
+			<div class="login-panel">	
+				<div class="login-title">	
+					<img src="/images/logo_login.png" alt="">
+					<span>登录</span>
+				</div>
+				<form action="" class="login-form">
+					<div class="form-group">
+						<i class="fa fa-user"></i>
+						<input type="text" placeholder="请输入用户名" name="loginname" class="login_name">	
+					</div>
+					<div class="form-group">
+						<i class="fa fa-lock"></i>
+						<input type="password" placeholder="请输入密码" name="loginpassword">
+					</div>
+					<div class="form-group">
+						<input type="button" class="button-green button-login" value="登录">	
+					</div>
+					
+				</form>
+			</div>
+			<div class="dividline"></div>
+			<div class="reg-panel">	
+				<div class="reg-title">	
+					<span>注册</span>
+				</div>
+				<form action="" class="reg-form">
+					<div class="form-group">
+						<i class="fa fa-user"></i>
+						<input type="text" placeholder="请输入用户名" name="regname" class="regname">
+					</div>
+					<div class="form-group">
+						<i class="fa fa-envelope"></i>
+						<input type="text" placeholder="请输入邮箱地址" name="mailaddress" class="regmail">
+					</div>
+					<div class="form-group">
+						<i class="fa fa-unlock-alt"></i>
+						<input type="password" placeholder="请输入密码" name="password" class="password">
+					</div>
+					<div class="form-group">
+						<i class="fa fa-lock"></i>
+						<input type="password" placeholder="请再次输入密码" class="re-password">
+					</div>
+					<div class="form-group">
+						<input type="button" class="button-green button-reg" value="注册">	
+					</div>
+					
+				</form>
+			</div>
+			
+			<i class="fa fa-close pop-close"></i>
+
+		</div>
+	</div>
+	<script src="javascripts/index.js"></script>
+	<script src="javascripts/account.js"></script>
+	</body>
