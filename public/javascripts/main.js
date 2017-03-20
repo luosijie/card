@@ -1,6 +1,7 @@
 var selectedElem, //选中元素
 	editSide,
 	editCanvas = document.querySelector('.edit-canvas'), //画布
+	svgContainer = document.querySelector('svg'),
 	editToolbar = document.querySelectorAll('.edit-toolbar'), //编辑控件
 	imageToolbar = document.querySelector('.edit-toolbar-image'), //图像控件
 	textToolbar = document.querySelector('.edit-toolbar-text'), //文本控件
@@ -146,9 +147,17 @@ document.addEventListener('mousemove', function(e) {
 			angle = 180 + angleRotateControl + angle;
 		}
 
-		selectedElem.style.transform = editTransformer.style.transform = 'rotate(' + angle + 'deg)';
+		if (selectedElem.tagName == 'path') {
+			var w = selectedElemRect.width,
+				h = selectedElemRect.height;
 
-		console.log(angleRotateControl);
+			selectedElem.setAttribute('transform', 'rotate(' + angle + ','+ w/2 + ' ' + h/2 +')');
+			editTransformer.style.transform = 'rotate(' + angle + 'deg)';
+		}else{
+			selectedElem.style.transform = editTransformer.style.transform = 'rotate(' + angle + 'deg)';	
+		}
+		
+
 	}
 });
 
@@ -297,7 +306,7 @@ editToolbar.forEach(function(elem) {
 					clipboard = selectedElem.cloneNode(true);
 					
 					if (selectedElem.tagName == 'path') {
-						var svgContainer = document.querySelector('svg');
+						
 						clipboard.setAttribute('transform', 'translate(' + (selectedElemRect.left - editCanvasRect.left + selectedElemRect.width + offsetValue) + ')');
 
 						console.log(selectedElemRect.left+offsetValue);
@@ -320,11 +329,22 @@ editToolbar.forEach(function(elem) {
 
 					break;
 				case 'edit-putup':
-					editCanvas.appendChild(selectedElem);
+				console.log(svgContainer);
+					if (selectedElem.tagName == 'path') {
+						svgContainer.appendChild(selectedElem);
 
+					}else{
+						editSide.appendChild(selectedElem);	
+					}
+					
 					break;
 				case 'edit-putdown':
-					editCanvas.insertBefore(selectedElem, editCanvas.firstChild);
+					if(selectedElem.tagName == 'path'){
+						console.log(elem.tagName)
+						svgContainer.insertBefore(selectedElem, svgContainer.firstChild)
+					}else{
+						editSide.insertBefore(selectedElem, editSide.firstChild);	
+					}
 					break;
 				case 'edit-delete':
 					selectedElem.parentNode.removeChild(selectedElem);
@@ -335,10 +355,17 @@ editToolbar.forEach(function(elem) {
 					break;
 				case 'edit-color':
 					var editColor = document.querySelector('.edit-color'),
-						inputColor = document.querySelector('input[type = color]');
+						inputColor = elem.querySelector('input[type = color]');
 					inputColor.onchange = function() {
-						selectedElem.style.color = inputColor.value;
-						editColor.style.backgroundColor = inputColor.value;
+
+						if (selectedElem.tagName == 'path') {
+							selectedElem.setAttribute('fill', canvasEditor.hexToRgb(inputColor.value));
+							console.log(canvasEditor.hexToRgb(inputColor.value))
+						}else{
+							selectedElem.style.color = inputColor.value;
+							editColor.style.backgroundColor = inputColor.value;	
+						}
+						
 					};
 					break;
 				case 'edit-fontfamily':

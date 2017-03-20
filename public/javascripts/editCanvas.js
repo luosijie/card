@@ -273,6 +273,18 @@
 		},
 
 		// 替换图片
+
+		//16进制转rgb格式
+		hexToRgb: function(hex){
+			var color =[],
+				rgb = [];
+			hex = hex.replace(/#/,'');
+			for(let i = 0; i<3; i++){
+				color[i] = '0x' + hex.substr(i+2, 2);
+				rgb.push(parseInt(Number(color[i])));
+			}
+			return 'rgb(' + rgb.join(',') + ')';
+		}
 	};
 
 	

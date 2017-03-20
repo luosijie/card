@@ -1,6 +1,1 @@
-var canvasEditor = new CanvasEditor();
-
-var path = document.querySelector('path');
-path.onclick = function(evt){
-	
-}
+var svgContainer = document.querySelector('svg');
