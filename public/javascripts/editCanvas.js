@@ -195,12 +195,22 @@
 
 		showEditTransformer: function(){
 			//editTransformer, selectedElem
-			editTransformer.style.width = selectedElemRect.width + 'px';
-			editTransformer.style.height = selectedElemRect.height + 'px';
-			editTransformer.style.left = selectedElemRect.left - editCanvasRect.left + 'px';
-			editTransformer.style.top = selectedElemRect.top - editCanvasRect.top + 'px';
-			editTransformer.style.transform = selectedElem.style.transform;
-			editTransformer.style.display = 'block';
+			var selectedElemRect = selectedElem.getBoundingClientRect();
+			if (selectedElem.tagName == 'path') {
+				editTransformer.style.width = selectedElemRect.width + 'px';
+				editTransformer.style.height = selectedElemRect.height + 'px';
+				editTransformer.style.left = selectedElemRect.left-editCanvasRect.left + 'px';
+				editTransformer.style.top = selectedElemRect.top-editCanvasRect.top + 'px';
+				editTransformer.style.display = 'block';	
+			}else{
+				editTransformer.style.width = selectedElem.offsetWidth + 'px';
+				editTransformer.style.height = selectedElem.offsetHeight + 'px';
+				editTransformer.style.left = selectedElem.offsetLeft + 'px';
+				editTransformer.style.top = selectedElem.offsetTop + 'px';
+				editTransformer.style.transform = selectedElem.style.transform;
+				editTransformer.style.display = 'block';	
+			}
+			
 		},
 
 		clearStyle: function(){
@@ -284,6 +294,50 @@
 				rgb.push(parseInt(Number(color[i])));
 			}
 			return 'rgb(' + rgb.join(',') + ')';
+		},
+
+		// 提取svg元素transform的值
+		getSvgTransform: function(svgElem, type, value){
+			var transform = svgElem.getAttribute('transform');
+			var result;
+			
+			if (!transform) {
+				svgElem.setAttribute('transform', 'translate(0,0) scale(1,1)');
+				transform = svgElem.getAttribute('transform');
+			}
+			switch(type){
+				case 'translate':
+					var reg = /translate\((.*?)\)/;
+					result = transform.match(reg);
+
+					if (result) {
+						if (value) {
+							return result[1].split(' '); //返回translate的值	
+						}else{
+							return result[0].split(' '); //返回transferlate字符串
+						}	
+					}else{
+						return [0,0];
+					}
+
+				break;
+					
+				case 'scale':
+					var reg = /scale\((.*?)\)/;
+					result = transform.match(reg);
+					if (result) {
+						if(value){
+							return result[1].split(',');
+						}else{
+							return result[0].split(',')
+						}	
+					}else{
+						return [1,1];
+					}
+
+				break;
+		    }	
+			
 		}
 	};
 

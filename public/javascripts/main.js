@@ -41,6 +41,12 @@ editCanvas.addEventListener('click', function(e) {
 		selectedElem = e.target;
 		selectedElemRect = selectedElem.getBoundingClientRect();
 
+		if (selectedElem.tagName == 'path') {
+			editTransformer = document.querySelector('.svg-transformer');
+		}else{
+			editTransformer = document.querySelector('.edit-transformer');
+		}
+
 		//显示变换控件
 		canvasEditor.showEditTransformer();
 
@@ -147,16 +153,7 @@ document.addEventListener('mousemove', function(e) {
 			angle = 180 + angleRotateControl + angle;
 		}
 
-		if (selectedElem.tagName == 'path') {
-			var w = selectedElemRect.width,
-				h = selectedElemRect.height;
-
-			selectedElem.setAttribute('transform', 'rotate(' + angle + ','+ w/2 + ' ' + h/2 +')');
-			editTransformer.style.transform = 'rotate(' + angle + 'deg)';
-		}else{
 			selectedElem.style.transform = editTransformer.style.transform = 'rotate(' + angle + 'deg)';	
-		}
-		
 
 	}
 });
@@ -666,3 +663,47 @@ if (sidebarUser) {
 		canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar);
 	})
 }
+
+//svg变换
+var svgTransformer = document.querySelector('.svg-transformer');
+var scaling = false;
+var direction;
+var originX, originY;
+svgTransformer.addEventListener('mousedown', function(evt){
+	scaling = true;
+	direction = evt.target.className;
+	originX = evt.clientX;
+	originY = evt.clientY;
+})
+document.addEventListener('mousemove', function(evt){
+		if (scaling) {
+			switch(direction){
+				case 'e':
+					var addWidth = evt.clientX - originX;
+					var finalWidth = selectedElemRect.width + addWidth;
+					var scaleValue = finalWidth/selectedElemRect.width;
+					var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
+					var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
+
+					console.log(selectedElem.getAttribute('transform'))
+					console.log(scale);
+					console.log(translate);
+
+					selectedElem.setAttribute('transform', translate[0] + ' ' + 'scale(' + scaleValue + ',' + scale[1] + ')');
+					canvasEditor.showEditTransformer();	
+					break;
+
+				case 's':
+					var addHeight = evt.clientY - originY;
+					var finalHeight = selectedElemRect.height + addHeight;
+					var scaleValue = finalHeight/selectedElemRect.height;
+					var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
+					selectedElem.setAttribute('transform', translate + '' + 'scale(1,' + scaleValue + ')');
+					canvasEditor.showEditTransformer();	
+					break;
+			}
+		}
+})
+document.addEventListener('mouseup', function(evt){
+	scaling = false
+})
