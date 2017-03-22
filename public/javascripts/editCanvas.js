@@ -312,9 +312,9 @@
 
 					if (result) {
 						if (value) {
-							return result[1].split(' '); //返回translate的值	
+							return result[1].split(','); //返回translate的值	
 						}else{
-							return result[0].split(' '); //返回transferlate字符串
+							return result[0]; //返回transferlate字符串
 						}	
 					}else{
 						return [0,0];
@@ -329,8 +329,7 @@
 						if(value){
 							return result[1].split(',');
 						}else{
-							return result[0].split(',')
-						}	
+							return result[0];						}	
 					}else{
 						return [1,1];
 					}

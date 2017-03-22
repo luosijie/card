@@ -1269,6 +1269,7 @@ font-size: 16px;
 }
 
 .svg-input{
+	display: block;
 	position: absolute;
 	width: 400px;
 	height: 300px;
