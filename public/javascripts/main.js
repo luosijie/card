@@ -87,7 +87,7 @@ document.addEventListener('mousemove', function(e) {
 		//如果点击对象为svg的path
 		if(selectedElem.tagName == 'path'){
 			var scale = canvasEditor.getSvgTransform(selectedElem,'scale');
-			
+			console.log(scale)
 			selectedElem.setAttribute('transform', 'translate(' + moveX + ',' + moveY +')' + ' ' + scale);
 			editTransformer.style.left = moveX + 'px';
 			editTransformer.style.top = moveY + 'px';
@@ -304,23 +304,25 @@ editToolbar.forEach(function(elem) {
 					const offsetValue = 10;
 
 					clipboard = selectedElem.cloneNode(true);
+
 					
 					if (selectedElem.tagName == 'path') {
 						
 						var translate = canvasEditor.getSvgTransform(selectedElem, 'translate', true);
+						var scale = canvasEditor.getSvgTransform(selectedElem, 'scale');
 
-						clipboard.setAttribute('transform', 'translate(' + (selectedElemRect.left - editCanvasRect.left + selectedElemRect.width + offsetValue) + ' ' + translate[1] +')');
+						clipboard.setAttribute('transform', 'translate(' + parseInt(selectedElemRect.left - editCanvasRect.left + selectedElemRect.width + offsetValue) + ',' + translate[1] +')' + '' + scale);
 
-						console.log(selectedElemRect.left+offsetValue);
-						svgContainer.appendChild(clipboard);
+						svg.appendChild(clipboard);
+
+						console.log(selectedElemRect.left - editCanvasRect.left + selectedElemRect.width + offsetValue);
 					}else{
 						clipboard.style.left = parseInt(selectedElem.offsetLeft) + selectedElemRect.width + offsetValue + 'px';
-						editSide.appendChild(clipboard);	
+						editSide.appendChild(clipboard);
 					}
 					
 					selectedElem = clipboard;
 					selectedElemRect = selectedElem.getBoundingClientRect();
-
 
 					//显示变换控件
 					canvasEditor.showEditTransformer();
@@ -332,7 +334,7 @@ editToolbar.forEach(function(elem) {
 					break;
 				case 'edit-putup':
 					if (selectedElem.tagName == 'path') {
-						svgContainer.appendChild(selectedElem);
+						svg.appendChild(selectedElem);
 
 					}else{
 						editSide.appendChild(selectedElem);	
@@ -342,7 +344,7 @@ editToolbar.forEach(function(elem) {
 				case 'edit-putdown':
 					if(selectedElem.tagName == 'path'){
 						console.log(elem.tagName)
-						svgContainer.insertBefore(selectedElem, svgContainer.firstChild)
+						svg.insertBefore(selectedElem, svg.firstChild)
 					}else{
 						editSide.insertBefore(selectedElem, editSide.firstChild);	
 					}
@@ -527,10 +529,12 @@ tabButtons.forEach(function(elem) {
 			editSide = sideFront;
 
 			sideBack.style.display = 'none';
+			svg = editSide.querySelector('svg');
 		} else {
 			sideFront.style.display = 'none';
 			sideBack.style.display = 'block';
 			editSide = sideBack;
+			svg = editSide.querySelector('svg');
 		}
 
 	});
@@ -799,11 +803,25 @@ function scaleW(evt){
 
 
 //添加svg元素
-var svgAdd = document.querySelector('.button-add-svg');
+var buttonAddSvg = document.querySelector('.button-add-svg');
 var svgInput = document.querySelector('.svg-input');
+var addSvg = document.querySelector('.add-svg');
 
-svgAdd.addEventListener('click', function(evt){
+var buttonCancelSvg = document.querySelector('.button-cancle-svg');
+
+addSvg.addEventListener('click', function(evt){
+
+	svgInput.style.display = 'block';
+
+})
+
+buttonCancelSvg.addEventListener('click', function(evt){
+	svgInput.style.display = 'none';
+})
+
+buttonAddSvg.addEventListener('click', function(evt){
 	var svgContent = document.querySelector('.svg-content');//svg内容
+
 	var defs = editSide.querySelector('defs');
 
 	var date = Date.now();

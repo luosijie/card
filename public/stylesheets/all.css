@@ -168,7 +168,7 @@ button.login:hover{
 	padding: 0 44px;
 }
 
-.login-reg-container i{
+.form-group i{
 	color: #858585;
 	position: absolute;
 	top: 14px;
@@ -218,8 +218,12 @@ button.login:hover{
 
 i.pop-close{
 	position: absolute;
-	right: -760px;
+	width: 24px;
+	height: 24px;
+	top: 10px;
+	right: 10px;
 	font-size: 24px;
+	color: #858585;
 	cursor: pointer;
 }
 .banner{
@@ -376,7 +380,6 @@ ul.temp-type li{
 .temp-list>ul{
 	width: 100%;
 	background: white;
-	position: absolute;
 }
 ul.temp-personality{
 	display: none;
@@ -1269,7 +1272,7 @@ font-size: 16px;
 }
 
 .svg-input{
-	display: block;
+	display: none;
 	position: absolute;
 	width: 400px;
 	height: 300px;

@@ -317,7 +317,12 @@
 							return result[0]; //返回transferlate字符串
 						}	
 					}else{
-						return [0,0];
+						if (value) {
+							return [0,0];
+						}else{
+							return 'translate(0,0)';
+						}
+						
 					}
 
 				break;
@@ -331,7 +336,12 @@
 						}else{
 							return result[0];						}	
 					}else{
-						return [1,1];
+						if (value) {
+							return [1,1];	
+						}else{
+							return 'scale(1,1)';
+						}
+						
 					}
 
 				break;
