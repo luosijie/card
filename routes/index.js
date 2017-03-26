@@ -9,6 +9,8 @@ var Card = require('../models/card');
 var CardTheme = require('../models/cardTheme');
 var CardSize = require('../models/cardSize');
 
+var User = require('../models/user');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Card
@@ -212,6 +214,38 @@ router.get('/getEditCard', function(req, res, next){
 	})
 })
 
+router.post('/regist', function(req, res, next){
+	var form = new multiparty.Form();
+	form.parse(req, function(err, fields, files){
+		console.log(fields);
+		var user = new User({
+			username: fields.regname[0],
+			email: fields.mailaddress[0],
+			password: fields.password[0]
+		})
+		user.save();
+		res.redirect('/');
+	})
+})
 
+router.post('/login', function(req, res, next){
+	var form = new multiparty.Form();
+	form.parse(req, function(err, fields, files){
+		
+		User.findOne({username: fields.loginname[0]})
+		.exec(function(err, user){
+			user.comparePassword(fields.loginpassword[0],function(err, isMatch){
+				if (err) {
+					console.log(err)
+				}else if (isMatch) {
+					req.session.user =  user;
+					console.log('登录成功' + req.session.user);
+				}else{
+					console.log(fields.loginname + ':' + user.username);
+				}
+			})
+		})
+	})
+})
 
 module.exports = router;

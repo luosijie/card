@@ -4,15 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var session = require('express-session');
 
 var app = express();
 var hbs = require('hbs');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/card');
+mongoose.Promise = Promise;
+var mongoStore = require('connect-mongo')(session);
+
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+
+var dbUrl = 'mongodb://localhost/card';
+
+mongoose.connect(dbUrl);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,6 +40,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: 'luo',
+  saveUninitialized: false,
+  resave: false,
+  store: new mongoStore({
+    url: dbUrl
+  })
+}))
 
 app.use('/', routes);
 app.use('/users', users);

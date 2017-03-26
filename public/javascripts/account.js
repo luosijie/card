@@ -38,6 +38,7 @@
 		var confirmMsg = new ConfirmMsg(regName.parentNode);
 		var reg = /[^\w\u4e00-\u9fa5]/g; //非数字、字母(不分大小写)、汉字、下划线
 		var canChecking;
+
 		regName.onkeyup = function(){
 			if (reg.test(this.value)) {
 				confirmMsg.alert('含有非法字符');
@@ -130,9 +131,31 @@
 			mailConfirmd &&
 			passwordConfirmd&&
 			rePasswordConfirmd) {
-			console.log('正在提交注册...')
+			var formData = new FormData(regForm);
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystagechange = function(){
+				if (xhr.readyState == 200 && xhr.status == 4) {
+					
+				}
+			}
+			xhr.open('POST', '/regist', true);
+			xhr.send(formData);
 		}else{
 			console.log('注册信息有误');
+		}
+	})
+
+	//提交登录信息
+	var loginButton = document.querySelector('.button-login');
+	loginButton.addEventListener('click', function(evt){
+		var loginForm = document.querySelector('.login-form');
+		var formData = new FormData(loginForm);
+		if (loginForm.loginname&&loginForm.loginpassword) {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/login', true);
+			xhr.send(formData);
+		}else{
+			console.log('登录信息不完整');
 		}
 	})
 		

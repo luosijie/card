@@ -229,8 +229,6 @@ document.addEventListener('mousemove', function(e) {
 
 		editCanvasRect = editCanvas.getBoundingClientRect(); //重新获取editCanvas是坐标，防止浏览器窗口变化产生错位
 
-
-
 		angleCross = Math.atan(selectedElemOffsetHeight / selectedElemOffsetWidth);
 
 		offsetX = e.clientX - preX;
@@ -809,43 +807,47 @@ var addSvg = document.querySelector('.add-svg');
 
 var buttonCancelSvg = document.querySelector('.button-cancle-svg');
 
-addSvg.addEventListener('click', function(evt){
+if (addSvg) {
+	addSvg.addEventListener('click', function(evt){
+		svgInput.style.display = 'block';
+	})	
+}
 
-	svgInput.style.display = 'block';
+if (buttonCancelSvg) {
+	buttonCancelSvg.addEventListener('click', function(evt){
+		svgInput.style.display = 'none';
+	})	
+}
 
-})
+if (buttonAddSvg) {
+	buttonAddSvg.addEventListener('click', function(evt){
+		var svgContent = document.querySelector('.svg-content');//svg内容
 
-buttonCancelSvg.addEventListener('click', function(evt){
-	svgInput.style.display = 'none';
-})
+		var defs = editSide.querySelector('defs');
 
-buttonAddSvg.addEventListener('click', function(evt){
-	var svgContent = document.querySelector('.svg-content');//svg内容
+		var date = Date.now();
 
-	var defs = editSide.querySelector('defs');
+		var regDefs = /<defs>[\s\S]*<\/defs>/gm;
+		var defsHtml;
+		if(regDefs.test(svgContent.value)){
+			defsHtml = svgContent.value.match(regDefs)[0].replace(/<\/defs>/, '').replace(/<defs>/, '').replace('PSgrad_0', date);
+			defs.innerHTML += defsHtml;
+		}else{
+			
+		}
+		var regPath = /<path[\s\S]*>/gm;
+		var pathHtml;
+		if(regPath.test(svgContent.value)){
+			pathHtml = svgContent.value.match(regPath)[0].replace(/<\/path>/, '').replace(/<path>/, '').replace('PSgrad_0', date);
+			svg.innerHTML += pathHtml;
+			console.log(svg);
+			console.log(pathHtml);
+		}
+		var path = document.querySelectorAll('path');
+		path.forEach(function(elem){
+			elem.classList.add('edit-elem');
+			elem.classList.add('edit-svg');
+		})
 
-	var date = Date.now();
-
-	var regDefs = /<defs>[\s\S]*<\/defs>/gm;
-	var defsHtml;
-	if(regDefs.test(svgContent.value)){
-		defsHtml = svgContent.value.match(regDefs)[0].replace(/<\/defs>/, '').replace(/<defs>/, '').replace('PSgrad_0', date);
-		defs.innerHTML += defsHtml;
-	}else{
-		
-	}
-	var regPath = /<path[\s\S]*>/gm;
-	var pathHtml;
-	if(regPath.test(svgContent.value)){
-		pathHtml = svgContent.value.match(regPath)[0].replace(/<\/path>/, '').replace(/<path>/, '').replace('PSgrad_0', date);
-		svg.innerHTML += pathHtml;
-		console.log(svg);
-		console.log(pathHtml);
-	}
-	var path = document.querySelectorAll('path');
-	path.forEach(function(elem){
-		elem.classList.add('edit-elem');
-		elem.classList.add('edit-svg');
-	})
-
-})
+	})	
+}
