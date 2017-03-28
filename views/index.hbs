@@ -9,7 +9,7 @@
 			<div class="log-reg">
 			{{#if loginedUser}}
 				<div class="logined">
-					<img src="images/img_mine.png" alt="">
+					<img src="images/logo_white.png" alt="">
 					<span class="user-name"><a href="/personal">{{loginedUser.username}}</a></span>
 					<span class="logout"><a href="/logout">登出</a></span>
 				</div>
@@ -65,8 +65,9 @@
 								<a href="/edituser/{{_id}}">
 									<img src="coverImg/{{coverFront}}" alt="">
 									<p>{{title}}</p>
-									<i class="fa fa-heart collection"></i>
+									
 								</a>
+								<i class="fa fa-heart collection"></i>
 							</li>
 							
 					{{/each}}

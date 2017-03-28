@@ -87,6 +87,10 @@ cursor: pointer;
 	font-size: 18px;
 }
 
+.collection-active{
+	color: #d81f1f;
+}
+
 /*首页样式*/
 header{
 	position: absolute;
@@ -121,6 +125,7 @@ ul.menu li a{
 .logined>img{
 	width: 30px;
 	border-radius: 50%;
+	background: black;
 	vertical-align: middle;
 	margin: 10px;
 }
@@ -381,7 +386,7 @@ ul.temp-type li{
 	min-height: 600px;
 	position: relative;
 }
-.temp-list a:hover .collection{
+.temp-list li:hover .collection{
 	display: block;
 }
 .temp-list ul li{

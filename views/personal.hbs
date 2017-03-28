@@ -7,14 +7,18 @@
 			</div>
 			
 			<div class="log-reg">
+			{{#if loginedUser}}
 				<div class="logined" style="display:block">
-					<img src="images/img_mine.png" alt="">
-					<span class="user-name">JesseLuo</span>
+					<img src="images/logo_white.png" alt="">
+					<span class="user-name">{{loginedUser.username}}</span>
+					<span class="logout"><a href="/logout">登出</a></span>
 				</div>
-			{{!-- 	<div class="no-login">
+			{{else}}
+				<div class="no-login">
 					<button class="login button-green">注册</button>
 					<button class="reg button-green">登录</button>
-				</div> --}}
+				</div>
+			{{/if}}
 			</div>
 			<ul class="menu">
 				<li><a href="/">首页</a></li>
