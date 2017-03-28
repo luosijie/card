@@ -16,6 +16,7 @@ body.edit *{
 ul.menu a.active{
 	color: #04981a;
 }
+
 a{
 	text-decoration: none;
 	color: inherit;
@@ -77,6 +78,14 @@ cursor: pointer;
 	overflow: hidden;
 }
 
+.collection{
+	display: none;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	color: gray;
+	font-size: 18px;
+}
 
 /*首页样式*/
 header{
@@ -105,14 +114,23 @@ ul.menu li a{
 	color: white;
 }
 .logined{
-	display: none;
+	display: block;
 	color: #04981a;
+	cursor: pointer;
 }
 .logined>img{
 	width: 30px;
 	border-radius: 50%;
 	vertical-align: middle;
 	margin: 10px;
+}
+.logined .logout{
+	margin-left: 10px;
+	color: grey;
+}
+.logined .logout:hover{
+	color: white;
+	transition: all 1s;
 }
 
 .no-login{
@@ -363,11 +381,14 @@ ul.temp-type li{
 	min-height: 600px;
 	position: relative;
 }
-
+.temp-list a:hover .collection{
+	display: block;
+}
 .temp-list ul li{
 	width: 25%;
 	float: left;
 	text-align: center;
+	position: relative;
 }
 .temp-list ul li img{
 	width: 280px;
@@ -1040,6 +1061,10 @@ ul.template>li{
 	margin-bottom: 15px;
 	background-color: white;
 	cursor: pointer;
+	position: relative;
+}
+ul.template>li:hover .collection{
+	display: block;
 }
 ul.template>li img{
 	width: 100%;

@@ -27,6 +27,10 @@
 		success: function(){
 			this.confirmAlert.innerHTML = '';
 			this.confirmSuccess.innerHTML = '<i class="fa fa-check"></i>';
+		},
+
+		checking: function(){
+			this.confirmSuccess.innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'
 		}
 
 	}
@@ -53,18 +57,28 @@
 		}
 		regName.onblur = function(){
 			if (canChecking) {
+				confirmMsg.checking();
 				var xhr = new XMLHttpRequest();
-				xhr.onreadystagechange = function(){
+				xhr.onreadystatechange = function(){
 					if (xhr.readyState == 4 && xhr.status == 200) {
-						console.log(xhr.responseText);
+						switch(xhr.responseText){
+							case '1':
+								confirmMsg.success();
+								userNameConfirmd = true;
+								break;
+							case '0':
+								confirmMsg.alert('用户名已经存在');
+								userNameConfirmd = false;
+								break;
+						}
 					}
 				}
+
 				xhr.open('POST', '/checkusername', true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 				xhr.send('username='+regName.value);
 			}
-			confirmMsg.success();
-			userNameConfirmd = true;
+			
 		}
 	})()
 
@@ -122,6 +136,51 @@
 		}
 	})()
 
+	;(function Login(){
+		var loginForm = document.querySelector('.login-form');
+		var loginName = document.querySelector('input[name = "loginname"]');
+	    var loginPassword = document.querySelector('input[name = "loginpassword"]');
+	    var loginButton = document.querySelector('.button-login');
+
+	    
+	    var confirmMsgName = new ConfirmMsg(loginForm.loginname.parentNode);
+	    var confirmMsgPassword = new ConfirmMsg(loginForm.loginpassword.parentNode);
+	    
+	    loginName.onkeyup = function(){
+	    	confirmMsgName.alert('');
+	    }
+
+	    loginPassword.onkeyup = function(){
+	    	confirmMsgPassword.alert('');
+	    }
+
+		loginButton.addEventListener('click', function(evt){
+			var formData = new FormData(loginForm);
+			if (loginForm.loginname&&loginForm.loginpassword) {
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function(){
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						switch(xhr.responseText){
+							case '1':
+								location.href = '/';
+								break;
+							case '0':
+								confirmMsgPassword.alert('密码错误');
+								break;
+							case '-1':
+								confirmMsgName.alert('该用户未注册');
+								break;
+						};
+					}
+				}
+				xhr.open('POST', '/login', true);
+				xhr.send(formData);
+			}else{
+				console.log('登录信息不完整');
+			}
+		})
+	})()
+
 	//提交注册信息
 	var buttonReg = document.querySelector('.button-reg');
 	var regForm = document.querySelector('.reg-form');
@@ -133,29 +192,20 @@
 			rePasswordConfirmd) {
 			var formData = new FormData(regForm);
 			var xhr = new XMLHttpRequest();
-			xhr.onreadystagechange = function(){
-				if (xhr.readyState == 200 && xhr.status == 4) {
-					
+			xhr.onreadystatechange = function(){
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					switch(xhr.responseText){
+						case '1':
+							console.log('注册成功!');
+							location.href = '/';
+						break;
+					}
 				}
 			}
 			xhr.open('POST', '/regist', true);
 			xhr.send(formData);
 		}else{
 			console.log('注册信息有误');
-		}
-	})
-
-	//提交登录信息
-	var loginButton = document.querySelector('.button-login');
-	loginButton.addEventListener('click', function(evt){
-		var loginForm = document.querySelector('.login-form');
-		var formData = new FormData(loginForm);
-		if (loginForm.loginname&&loginForm.loginpassword) {
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', '/login', true);
-			xhr.send(formData);
-		}else{
-			console.log('登录信息不完整');
 		}
 	})
 		

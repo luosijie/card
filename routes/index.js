@@ -3,6 +3,8 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 
+var app = express();
+
 var multiparty = require('multiparty');
 
 var Card = require('../models/card');
@@ -217,34 +219,57 @@ router.get('/getEditCard', function(req, res, next){
 router.post('/regist', function(req, res, next){
 	var form = new multiparty.Form();
 	form.parse(req, function(err, fields, files){
-		console.log(fields);
 		var user = new User({
 			username: fields.regname[0],
 			email: fields.mailaddress[0],
 			password: fields.password[0]
 		})
 		user.save();
-		res.redirect('/');
+		res.send('1');//注册成功
 	})
 })
 
+//用户登录
 router.post('/login', function(req, res, next){
 	var form = new multiparty.Form();
 	form.parse(req, function(err, fields, files){
 		
 		User.findOne({username: fields.loginname[0]})
 		.exec(function(err, user){
-			user.comparePassword(fields.loginpassword[0],function(err, isMatch){
-				if (err) {
-					console.log(err)
-				}else if (isMatch) {
-					req.session.user =  user;
-					console.log('登录成功' + req.session.user);
-				}else{
-					console.log(fields.loginname + ':' + user.username);
-				}
-			})
+			if (user) {
+				user.comparePassword(fields.loginpassword[0],function(err, isMatch){
+					if (err) {
+						console.log(err)
+					}else if (isMatch) {
+						req.session.user =  user;
+						res.send('1');//登录成功
+					}else{
+						res.send('0');//密码不匹配
+					}
+				})	
+			}else{
+				res.send('-1');//用户名不存在
+			}
+			
 		})
+	})
+})
+
+router.get('/logout', function(req, res){
+	delete req.session.user;
+	res.redirect('/');
+})
+
+//注册检测用户名是否可用
+router.post('/checkusername', function(req,res, next){
+	User.findOne({username: req.body.username})
+	.select('username')
+	.exec(function(err, user){
+		if (user) {
+			res.send('0');
+		}else{
+			res.send('1');
+		}
 	})
 })
 

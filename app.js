@@ -43,12 +43,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'luo',
-  saveUninitialized: false,
+  saveUninitialized: true,
   resave: false,
   store: new mongoStore({
     url: dbUrl
   })
 }))
+
+app.use(function(req,res,next){
+  var user = req.session.user;
+  if (user) {
+    console.log('app' + user)
+    app.locals.loginedUser = user;
+  }else{
+    delete app.locals.loginedUser
+  }
+  console.log(app.locals.loginedUser)
+  next();
+})
 
 app.use('/', routes);
 app.use('/users', users);
