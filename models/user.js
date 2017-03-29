@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema; 
 var bcrypt = require('bcryptjs');
 
+var Card = require('./card');
+
 var UserSchema = new Schema({
 	username: {
 		type: String,
@@ -9,11 +11,12 @@ var UserSchema = new Schema({
 	},
 	email: String,
 	password: String,
-	collections: {
-		type: Schema.ObjectId,
-		ref: 'card'
 
-	},
+	collections: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Card'
+	}],
+	
 	meta: {
 		createAt: {
 			type: Date,

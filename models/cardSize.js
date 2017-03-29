@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 var Card = require('./card');
 var Schema = mongoose.Schema;
 var CardSizeSchema = new Schema({
-	title: String, //标题
+	title: {
+		type: String,
+		unique: true
+	},
 	cards: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Card'

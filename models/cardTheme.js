@@ -2,9 +2,12 @@ var mongoose = require('mongoose');
 var Card = require('./card');
 var Schema = mongoose.Schema;
 var CardThemeSchema = new Schema({
-	title: String, //标题
-	cards: [{
+	title: {
 		type: String,
+		unique: true
+	}, //标题
+	cards: [{
+		type: Schema.Types.ObjectId,
 		ref: 'Card'
 	}],
 	meta: {

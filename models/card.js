@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var CardTheme = require('./cardTheme');
 var CardTheme = require('./cardSize');
+var User = require('./user');
 var Schema = mongoose.Schema;
 var CardSchema = new Schema({
 	title: String, //标题
@@ -16,6 +17,12 @@ var CardSchema = new Schema({
 	sideBack: String, //反面DOM
 	coverFront: String, //正面封面
 	coverBack: String, //反面封面
+
+	collector: [{
+		type: String,
+		ref: 'User'
+	}],
+
 	meta: {
 		createAt: {
 			type: Date,

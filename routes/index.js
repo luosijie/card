@@ -3,13 +3,9 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 
-var app = express();
-
 var multiparty = require('multiparty');
 
 var Card = require('../models/card');
-var CardTheme = require('../models/cardTheme');
-var CardSize = require('../models/cardSize');
 
 var User = require('../models/user');
 
@@ -271,6 +267,75 @@ router.post('/checkusername', function(req,res, next){
 			res.send('1');
 		}
 	})
+})
+
+router.post('/addcollection', function(req, res, next){
+	var cardId = req.body.cardId;
+	var username = req.session.user.username;
+
+	var promise = new Promise(function(resolve, reject){
+		
+		Card.findOne({_id: cardId})
+		.exec(function(err, card){
+			if (card) {
+				card.collector.push(username);
+				console.log('添加' + card)
+				resolve();
+			}else{
+				reject();
+				res.send('0');
+			}
+		});
+
+	})
+
+	promise.then(function(){
+		User.findOne({username: username})
+		.exec(function(err, user){
+			if (user) {
+				user.collections.push(cardId);
+				res.send('1');
+			}else{
+				res.send('0');
+			}
+		});
+	})
+
+})
+
+router.post('/deletecollection', function(req, res, next){
+	var cardId = req.body.cardId;
+	var username = req.session.user.username;
+
+	var promise = new Promise(function(resolve, reject){
+		
+		Card.findOne({_id: cardId})
+		.exec(function(err, card){
+			if (card) {
+				card.collector.remove(username);
+				console.log('删除' + card);
+				resolve();
+			}else{
+				reject(err);
+				res.send('0');
+			}
+		});
+
+	})
+
+	promise.then(function(){
+		User.findOne({username: username})
+		.exec(function(err, user){
+			if (user) {
+				user.collections.remove(cardId);
+				res.send('1');
+			}else{
+				res.send('0');
+				console.log(err);
+			}
+		});
+	})
+
 })
 
 module.exports = router;

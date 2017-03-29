@@ -53,12 +53,10 @@ app.use(session({
 app.use(function(req,res,next){
   var user = req.session.user;
   if (user) {
-    console.log('app' + user)
     app.locals.loginedUser = user;
   }else{
     delete app.locals.loginedUser
   }
-  console.log(app.locals.loginedUser)
   next();
 })
 
