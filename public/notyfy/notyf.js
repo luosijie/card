@@ -86,7 +86,7 @@
       setTimeout(function(){
           notification.className += " disappear";
           notification.addEventListener(_this.animationEnd, function(event){
-            event.target == notification && _this.container.removeChild(notification);
+            event.target == notification && _this.container.parentNode.removeChild(_this.container);
           });
           var index = _this.notifications.indexOf(notification);
           _this.notifications.splice(index,1);
