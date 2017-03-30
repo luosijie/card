@@ -1,0 +1,79 @@
+@keyframes fadeinup{
+	from{
+		opacity: 0;
+		margin-top: 0px;
+	}
+	to{
+		opacity: 1;
+		
+		margin-top: 20px;
+	}
+}
+
+@keyframes fadeoutdown{
+	from{
+		opacity: 1;
+		margin-top: 20px;
+	}
+	to{
+		opacity: 0;
+		margin-top:0px;
+	}
+}
+
+.notyf-container{
+	width: 100%;
+	display: flex;
+	position: fixed;
+	top: 0;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	z-index: 9999;
+}
+
+.notyf{
+	display: flex;
+	animation: fadeinup 0.5s forwards;
+	transition: all 0.5s;
+	-webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
+	-moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
+	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
+	padding:20px;
+	border-radius: 4px;
+	background-color: white;
+	color: #232323;
+	text-align: center;
+	align-items: center;
+}
+.alert i, .confirm i{
+	font-size: 24px;
+	margin-right: 10px;
+}
+.alert i{
+	color: red;
+}
+.confirm i{
+	color: #009944;
+}
+
+.disappear{
+	animation: fadeoutdown 0.5s forwards;
+	
+}
+.notyf-message{
+    opacity: 1;
+    font-size: 18px;
+}
+
+/* Small screens */
+@media only screen and (max-width: 736px){
+  .notyf-container{
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+    right: 0;
+    left: 0;
+  }
+}

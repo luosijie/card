@@ -25,13 +25,17 @@ mongoose.connect(dbUrl);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+hbs.registerPartials(__dirname + '/views/partials');
+
 hbs.registerHelper("equal", function(v1, v2, options){
   if(v1 == v2){
     return options.fn(this);
   }else{
     return options.inverse(this);
   }
-})
+});
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

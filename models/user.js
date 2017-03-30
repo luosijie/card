@@ -14,6 +14,7 @@ var UserSchema = new Schema({
 
 	collections: [{
 		type: Schema.Types.ObjectId,
+		unique: true,
 		ref: 'Card'
 	}],
 	

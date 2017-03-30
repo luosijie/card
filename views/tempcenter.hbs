@@ -47,23 +47,7 @@
 	</section>
 	<section class="all-temp">
 		<div class="container">
-			<div class="temp-list">
-				<ul>
-					{{#each card}}
-						<li>
-							<a href="/edituser/{{_id}}">
-								<img src="/coverImg/{{coverFront}}" alt="">
-								<p>{{title}}</p>
-								<i class="fa fa-heart collection"></i>
-							</a>
-						</li>
-					{{/each}}
-					{{!-- <li>
-						<img src="/images/temp_default.png" alt="">
-						<p>简约商务名片</p>
-					</li> --}}
-				</ul>
-			</div>	
+			{{> templist}}
 		</div>
 	</section>
 	<footer class="template">
@@ -77,12 +61,9 @@
 						<img src="/coverImg/\{{coverFront}}" alt="">
 						<p>\{{title}}</p>
 					</a>
+					<i class="fa fa-heart collection"></i>
 				</li>
 			\{{/each}}
-			{{!-- <li>
-				<img src="/images/temp_default.png" alt="">
-				<p>简约商务名片</p>
-			</li> --}}
 		</ul>
 	</script>
 	<script src="/javascripts/thirdjs/handlebars-v4.0.5.js"></script>

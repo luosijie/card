@@ -11,16 +11,39 @@ var User = require('../models/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
+
   Card
   .find()
-  .select('title coverFront theme')
+  .lean()
+  .select('coverFront theme title collector')
   .sort('-meta.updateAt')
   .exec(function(err, data){
   	const length = 8;
   	var businessArry = [],
   		personalityArry = [];
 
+  	for(let i = 0; i < data.length; i++){
+  		var collector = data[i].collector;
+  		if (collector) {
+  			for(let j = 0; j < collector.length; j++){
+
+  				var _username = req.session.user.username;
+  				if (_username) {
+  					if (collector[j] == _username) {
+		  				data[i].flag = '1';
+		  				
+		  			}
+  				}
+	  			
+	  		}
+  		}
+  		
+  	}
+
+
 	for(let i = 0; i<data.length; i++){
+		console.log(data)	  				
 		if (data[i].theme == 'business') {
 			if (businessArry.length < length) {
 				businessArry.push(data[i]);
@@ -32,6 +55,7 @@ router.get('/', function(req, res, next) {
 			}
 		}
 	}
+
   	res.render('index', { 
   		title: '心方设计',
   		business: businessArry,
@@ -83,7 +107,15 @@ router.get('/upload', function(req, res, next){
 })
 
 router.get('/personal', function(req, res, next){
-	res.render('personal',{title:'个人中心'});
+	var _username = req.session.user.username;
+	Card.find(function(err, cards){
+		console.log(cards)
+		res.render('personal',{
+			title:'个人中心',
+			collections: cards
+		});
+	})
+	
 })
 
 // 处理文件上传
@@ -271,36 +303,44 @@ router.post('/checkusername', function(req,res, next){
 
 router.post('/addcollection', function(req, res, next){
 	var cardId = req.body.cardId;
-	var username = req.session.user.username;
+	
+	if (req.session.user) {
+		var username = req.session.user.username;
 
-	var promise = new Promise(function(resolve, reject){
+		var promise = new Promise(function(resolve, reject){
 		
-		Card.findOne({_id: cardId})
-		.exec(function(err, card){
-			if (card) {
-				card.collector.push(username);
-				console.log('添加' + card)
-				resolve();
-			}else{
-				reject();
-				res.send('0');
-			}
-		});
+			Card.findOne({_id: cardId})
+			.exec(function(err, card){
+				if (card) {
+					card.collector.push(username);
+					card.save();
+					console.log('添加成功:' + card._id);
+					resolve();
+				}else{
+					reject();
+					res.send('0');
+				}
+			});
 
-	})
+		})
 
-	promise.then(function(){
-		User.findOne({username: username})
-		.exec(function(err, user){
-			if (user) {
-				user.collections.push(cardId);
-				res.send('1');
-			}else{
-				res.send('0');
-			}
-		});
-	})
+		promise.then(function(){
+			User.findOne({username: username})
+			.exec(function(err, user){
+				if (user) {
+					user.collections.push(cardId);
+					user.save();
+					res.send('1');
+				}else{
+					res.send('0');
+				}
+			});
+		})
+	}else{
+		res.send('-1');
+	}
 
+	
 })
 
 router.post('/deletecollection', function(req, res, next){
@@ -308,12 +348,13 @@ router.post('/deletecollection', function(req, res, next){
 	var username = req.session.user.username;
 
 	var promise = new Promise(function(resolve, reject){
-		
+
 		Card.findOne({_id: cardId})
 		.exec(function(err, card){
 			if (card) {
 				card.collector.remove(username);
-				console.log('删除' + card);
+				card.save();
+				console.log('删除成功:' + card._id);
 				resolve();
 			}else{
 				reject(err);
@@ -328,6 +369,7 @@ router.post('/deletecollection', function(req, res, next){
 		.exec(function(err, user){
 			if (user) {
 				user.collections.remove(cardId);
+				user.save();
 				res.send('1');
 			}else{
 				res.send('0');

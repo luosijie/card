@@ -67,7 +67,11 @@
 									<p>{{title}}</p>
 									
 								</a>
+								{{#if flag}}
+								<i class="fa fa-heart collection collection-active"></i>
+								{{else}}
 								<i class="fa fa-heart collection"></i>
+								{{/if}}
 							</li>
 							
 					{{/each}}
@@ -83,8 +87,12 @@
 								<a href="/edituser/{{_id}}">
 									<img src="coverImg/{{coverFront}}" alt="">
 									<p>{{title}}</p>
-									<i class="fa fa-heart collection"></i>
 								</a>
+								{{#if flag}}
+								<i class="fa fa-heart collection collection-active"></i>
+								{{else}}
+								<i class="fa fa-heart collection"></i>
+								{{/if}}
 							</li>
 					{{/each}}
 					{{!-- <div class="loader">	
@@ -177,5 +185,6 @@
 		</div>
 	</div>
 	<script src="javascripts/index.js"></script>
+	<script src='javascripts/getCards.js'></script>
 	<script src="javascripts/account.js"></script>
 	</body>
