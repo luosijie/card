@@ -31,28 +31,40 @@ var UserSchema = new Schema({
 })
 
 UserSchema.pre('save', function(next){
+
 	if (this.isNew) {
+
 		this.meta.createAt = this.meta.updateAt = Date.now();
+
+		var self = this;
+		//密码加密存储
+		bcrypt.genSalt(10, function(err, salt){
+			bcrypt.hash(self.password, salt, function(err, hash){
+				self.password = hash;
+				console.log(self.password);
+				next(); 
+			})
+		})
+
 	}else{
 		this.meta.updateAt = Date.now();
+		next(); 
 	}
 
-
-	var self = this;
-	//密码加密存储
-	bcrypt.genSalt(10, function(err, salt){
-		bcrypt.hash(self.password, salt, function(err, hash){
-			self.password = hash;
-			console.log(self.password);
-			next(); 
-		})
-	})
+	
 
 })
 
 UserSchema.methods.comparePassword = function(candidatePassword, cb){
 	var self = this;
 	bcrypt.compare(candidatePassword, self.password, function(err, isMatch){
+			console.log(candidatePassword);
+			console.log('原始密码:54luoluo\n' + self.password);
+
+			var salt = self.password.substring(0, 29);
+
+			console.log(bcrypt.hashSync(candidatePassword, salt));
+
 			cb(null, isMatch);
 	});
 };

@@ -91,6 +91,11 @@ cursor: pointer;
 	color: #d81f1f;
 }
 
+.retrieve-password{
+	font-size: 14px;
+	display: inline-block;
+	float: right;
+}
 /*首页样式*/
 header{
 	position: absolute;
@@ -1040,6 +1045,7 @@ ul.thame-list, ul.size-list{
 	margin-top: 10px;
 	padding: 10px 0;
 	background-color: #383838;
+	z-index: 999;
 }
 ul.thame-list li:hover, ul.size-list li:hover{
 	background-color: #404040;
@@ -1063,6 +1069,7 @@ ul.template{
 	margin-right: -18px;
 }
 ul.template>li{
+	height: 171px;
 	margin-bottom: 15px;
 	background-color: white;
 	cursor: pointer;
@@ -1331,4 +1338,8 @@ font-size: 16px;
 }
 .svg-input button.button-add-svg{
 	float: right;
+}
+.cancel-collection{
+	padding: 10px 20px;
+	margin-bottom: 30px;
 }

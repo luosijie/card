@@ -6,7 +6,11 @@
 					<img src="/coverImg/{{coverFront}}" alt="">
 					<p>{{title}}</p>
 				</a>
-				<i class="fa fa-heart collection"></i>
+				{{#if flag}}
+					<i class="fa fa-heart collection collection-active"></i>
+				{{else}}
+					<i class="fa fa-heart collection"></i>
+				{{/if}}
 			</li>
 		{{/each}}
 	</ul>

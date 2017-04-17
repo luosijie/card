@@ -3,15 +3,17 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 
+var bcrypt = require('bcryptjs');
+
 var multiparty = require('multiparty');
 
 var Card = require('../models/card');
-
+var CardTheme = require('../models/cardTheme');
+var CardSize = require('../models/cardSize');
 var User = require('../models/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
 
   Card
   .find()
@@ -28,8 +30,8 @@ router.get('/', function(req, res, next) {
   		if (collector) {
   			for(let j = 0; j < collector.length; j++){
 
-  				var _username = req.session.user.username;
-  				if (_username) {
+  				if (req.session.user) {
+  					var _username = req.session.user.username;
   					if (collector[j] == _username) {
 		  				data[i].flag = '1';
 		  				
@@ -43,7 +45,7 @@ router.get('/', function(req, res, next) {
 
 
 	for(let i = 0; i<data.length; i++){
-		console.log(data)	  				
+			  				
 		if (data[i].theme == 'business') {
 			if (businessArry.length < length) {
 				businessArry.push(data[i]);
@@ -92,8 +94,28 @@ router.get('/edituser(/:name)?', function(req, res, next){
 router.get('/tempcenter', function(req, res, next){
 	 Card
 	  .find()
+	  .select('coverFront title collector')
 	  .sort('-meta.updateAt')
 	  .exec(function(err, data){
+
+	  	for(let i = 0; i < data.length; i++){
+	  		var collector = data[i].collector;
+	  		if (collector) {
+	  			for(let j = 0; j < collector.length; j++){
+
+	  				if (req.session.user) {
+	  					var _username = req.session.user.username;
+	  					if (collector[j] == _username) {
+			  				data[i].flag = '1';
+			  				
+			  			}
+	  				}
+		  			
+		  		}
+	  		}
+	  		
+	  	}
+
 	  	res.render('tempcenter', { 
 	  		title: '心方设计',
 	  		card: data 
@@ -103,18 +125,32 @@ router.get('/tempcenter', function(req, res, next){
 
 /*GET upload page.*/
 router.get('/upload', function(req, res, next){
+
+	if (req.session.user.username != 'admin') {
+		res.redirect('/');
+	}
 	res.render('upload',{title:'心方设计'});
 })
 
 router.get('/personal', function(req, res, next){
-	var _username = req.session.user.username;
-	Card.find(function(err, cards){
-		console.log(cards)
-		res.render('personal',{
-			title:'个人中心',
-			collections: cards
-		});
-	})
+	if (req.session.user) {
+		var _username = req.session.user.username;
+		Card.find(function(err, cards){
+			User.findOne({username: _username})
+			.select('collections')
+			.populate('collections','coverFront title collector')
+			.exec(function(err, user){
+				res.render('personal',{
+					title:'个人中心',
+					collections: user.collections
+				});
+			})
+			
+		})	
+	}else{
+		res.redirect('/');
+	}
+	
 	
 })
 
@@ -218,9 +254,26 @@ router.get('/getcards', function(req, res, next){
 
 	Card
 	.find(themeFilter)
-	.select('coverFront title')
+	.lean()
+	.select('coverFront title collector')
 	.sort('-meta.updateAt')
 	.exec(function(err, data){
+
+		for(let i = 0; i < data.length; i++){
+	  		var collector = data[i].collector;
+	  		if (collector) {
+	  			for(let j = 0; j < collector.length; j++){
+
+	  				if (req.session.user) {
+	  					var _username = req.session.user.username;
+	  					if (collector[j] == _username) {
+			  				data[i].flag = '1';
+			  			}
+	  				}
+		  			
+		  		}
+	  		}
+	  	}
 		if (err) {
 			console.log(err);
 		}else{
@@ -231,7 +284,7 @@ router.get('/getcards', function(req, res, next){
 
 router.get('/getEditCard', function(req, res, next){
 	var cardId = req.query.id;
-	console.log(cardId);
+	
 	Card
 	.findOne({_id: cardId})
 	.select('sideFront sideBack')
@@ -314,7 +367,6 @@ router.post('/addcollection', function(req, res, next){
 				if (card) {
 					card.collector.push(username);
 					card.save();
-					console.log('添加成功:' + card._id);
 					resolve();
 				}else{
 					reject();
@@ -354,7 +406,6 @@ router.post('/deletecollection', function(req, res, next){
 			if (card) {
 				card.collector.remove(username);
 				card.save();
-				console.log('删除成功:' + card._id);
 				resolve();
 			}else{
 				reject(err);
@@ -378,6 +429,51 @@ router.post('/deletecollection', function(req, res, next){
 		});
 	})
 
+})
+
+router.post('/checkemail', function(req, res){
+	var email = req.body.email;
+	if (req.session.user) {
+		var username = req.session.user.username;
+		User.findOne({username: username})
+		.exec(function(err, user){
+			user.email = email;
+			user.save(function(err){
+				if (err) {
+					res.send('0');
+				}else{
+					res.send('1');
+					req.session.user = user;
+				}
+			});
+		})
+	}
+})
+
+router.post('/checkpassword', function(req, res){
+	var originpassword = req.body.originpassword;
+	var newpassword = req.body.newpassword;
+
+	if (req.session.user) {
+		var username = req.session.user.username;
+		User.findOne({username: username})
+		.exec(function(err, user){
+
+			bcrypt.compare(originpassword, user.password, function(err, isMatch){
+				if (isMatch) {
+					var hash = bcrypt.hashSync(newpassword, 10);
+					user.password = hash;
+					user.save();
+					res.send('1');
+				}else if (!isMatch){
+					res.send('0');
+				}else{
+					res.send('-1');
+				}
+			});
+
+		})
+	}
 })
 
 module.exports = router;

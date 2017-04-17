@@ -2,15 +2,15 @@
 <header>
 		<div class="container">
 			<div class="logo">
-				<img src="images/logo_home.png" alt="">
+				<img src="/images/logo_home.png" alt="">
 
 			</div>
 			
 			<div class="log-reg">
 			{{#if loginedUser}}
-				<div class="logined" style="display:block">
+				<div class="logined">
 					<img src="images/logo_white.png" alt="">
-					<span class="user-name">{{loginedUser.username}}</span>
+					<span class="user-name"><a href="/personal">{{loginedUser.username}}</a></span>
 					<span class="logout"><a href="/logout">登出</a></span>
 				</div>
 			{{else}}
@@ -26,7 +26,6 @@
 				<li><a href="/tempcenter">模板中心</a></li>
 				<li>联系我</li>
 			</ul>
-
 		</div>
 	</header>
 	<section class="personal-top">
@@ -53,20 +52,20 @@
 									<img src="coverImg/{{coverFront}}" alt="">
 									<p>{{title}}</p>
 								</a>
+								<button class="button-grey cancel-collection">取消收藏</button>
 							</li>
-							
 					{{/each}}
 				</ul>
 			</div>
 			<div class="slide-content acount-info" style="display:none">
 				<div class="personal-username">	
 					<label for="username">用户名</label>
-					<input type="text" value="JesseLuo" disabled="" placeholder="请输入用户名">
-					<span>修改</span>
+					<input type="text" value="{{loginedUser.username}}" disabled="" placeholder="请输入用户名">
+					{{!-- <span>修改</span> --}}
 				</div>
 				<div class="personal-useremail">	
 					<label for="username">邮箱</label>
-					<input type="text" value="luo_sj@163.com" disabled="" placeholder="请输入邮箱地址">
+					<input type="text" value="{{loginedUser.email}}" disabled="" placeholder="请输入邮箱地址">
 					<span>修改</span>
 				</div>
 				<div class="personal-usercode">	
@@ -74,7 +73,7 @@
 					<input type="password" placeholder="请输入旧密码" disabled="">
 					<span>修改</span>
 				</div>
-				<div class="personal-usercode">	
+				<div class="personal-reusercode">	
 					<label for="username"></label>
 					<input type="password" placeholder="请输入新密码" disabled="">
 					<span>	</span>
@@ -87,4 +86,5 @@
 	</footer>
 	
 	<script src="javascripts/index.js"></script>
+	<script src="javascripts/personal.js"></script>
 	</body>

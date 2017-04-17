@@ -37,9 +37,9 @@
 	display: flex;
 	animation: fadeinup 0.5s forwards;
 	transition: all 0.5s;
-	-webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
-	-moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
-	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
+	-webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
 	padding:20px;
 	border-radius: 4px;
 	background-color: white;

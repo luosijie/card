@@ -17,6 +17,7 @@ var popComfirmButton = document.querySelector('.pop-confirm');
 
 popComfirmButton.addEventListener('click', function(){
 	mask.style.display = 'none';
+
 	uploadImages()
 	.then(function(data){
 		return uploadCover();
@@ -24,11 +25,13 @@ popComfirmButton.addEventListener('click', function(){
 	.then(function(coverData){
 		uploadDom(coverData);
 	})
+
 })
 
 function uploadImages(){
 
 	var promise = new Promise(function(resolve, reject){
+
 		var editImages = document.querySelectorAll('.edit-image');
 		var base64Images = [];
 		var formDataImg = new FormData();
@@ -75,60 +78,46 @@ function uploadCover(){
 		var sideFront = document.querySelector('.side-front'),
 			sideBack = document.querySelector('.side-back');
 		var formDataCover = new FormData(form);
-		var sideList = [];
-		if(sideFront){
-			sideList.push(sideFront);
-		}
-		if(sideBack){
-			sideList.push(sideBack);
-		}
 
-		for(let i = 0; i < sideList.length; i++){
-
-			// 判断dom是否可见，如果不可见htmlcanvas没法运行
-			if(window.getComputedStyle(sideList[i]).display == 'none'){
-				sideList[i].style.display = 'block';
-
-				saveCover(sideList, i, false);
-			}else{
-	
-				saveCover(sideList, i, true);
+		var promiseAll = Promise.all([saveCover(sideFront), saveCover(sideBack)]);
+		
+		promiseAll
+		.then(function(_resolve){
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/uploadCovers', true);
+			xhr.send(formDataCover);
+			xhr.onload = function(){
+				//返回封面地址数组，注意0为反面，1为正面
+				resolve(JSON.parse(xhr.responseText));
 			}
+		})
 
-		}
 
+		function saveCover(dom){
 
-		/*
-		 *@arry:待html2canvas转化的dom组
-		 *@visible: 待转化的dom是否可见
-		 */
-		function saveCover(arry, index, visible){
-			//html2canvas生成封面预览 并保存到 Formdata 准备上传后台
-
-			html2canvas(arry[index]).then(function(canvas){
-
-				//到这里顺序发生颠倒
-				var imgData = canvas.toDataURL();
-
-				formDataCover.append('coverImg', imgData);
-
-				if (!visible) {
-					arry[index].style.display = 'none'
-				}
-
-				if (index == arry.length - 2) {
-					console.log(index);
-					var xhr = new XMLHttpRequest();
-					xhr.open('POST', '/uploadCovers', true);
-					xhr.send(formDataCover);
-					xhr.onload = function(){
-						//返回封面地址数组，注意0为反面，1为正面
-						resolve(JSON.parse(xhr.responseText));
-					}
+			var promise = new Promise(function(_resolve, reject){
+				if (window.getComputedStyle(dom).display == 'none') {
+					dom.style.display = 'block';
+					html2canvas(dom).then(function(canvas){
+						var imgData = canvas.toDataURL();
+						formDataCover.append('coverImg', imgData);
+						dom.style.display = 'none';
+						_resolve();
+					})
+				}else{
+					html2canvas(dom).then(function(canvas){
+						var imgData = canvas.toDataURL();
+						formDataCover.append('coverImg', imgData);
+						_resolve();
+					})
 				}
 			})
+
+			return promise;
 		}
+
 	});
+
 	return promise;	
 }
 

@@ -12,7 +12,7 @@ var sizeSelect = document.querySelector('.size-select'),
 	familySelect = document.querySelector('.family-select'),
 	transparentRange = document.querySelector('.transparent-range');
 
-var selectedlemRect,
+var selectedElemRect,
 	editCanvasRect = editCanvas.getBoundingClientRect();
 
 var clipboard; //剪贴版 用于复制粘贴功能
@@ -87,10 +87,11 @@ document.addEventListener('mousemove', function(e) {
 		//如果点击对象为svg的path
 		if(selectedElem.tagName == 'path'){
 			var scale = canvasEditor.getSvgTransform(selectedElem,'scale');
-			console.log(scale)
+
 			selectedElem.setAttribute('transform', 'translate(' + moveX + ',' + moveY +')' + ' ' + scale);
 			editTransformer.style.left = moveX + 'px';
 			editTransformer.style.top = moveY + 'px';
+			
 		}
 	}
 });
@@ -110,7 +111,7 @@ var rotateControl = document.querySelector('.rotate'),
 
 document.addEventListener('mousedown', function(e) {
 	if (selectedElem) {
-		selectedlemRect = selectedElem.getBoundingClientRect();
+		selectedElemRect = selectedElem.getBoundingClientRect();
 		centerX = selectedElemRect.left + selectedElemRect.width / 2;
 		centerY = selectedElemRect.top + selectedElemRect.height / 2;
 
@@ -341,7 +342,6 @@ editToolbar.forEach(function(elem) {
 					break;
 				case 'edit-putdown':
 					if(selectedElem.tagName == 'path'){
-						console.log(elem.tagName)
 						svg.insertBefore(selectedElem, svg.firstChild)
 					}else{
 						editSide.insertBefore(selectedElem, editSide.firstChild);	
@@ -360,8 +360,7 @@ editToolbar.forEach(function(elem) {
 					inputColor.onchange = function() {
 
 						if (selectedElem.tagName == 'path') {
-							selectedElem.setAttribute('fill', canvasEditor.hexToRgb(inputColor.value));
-							console.log(canvasEditor.hexToRgb(inputColor.value))
+							selectedElem.setAttribute('fill', inputColor.value);
 						}else{
 							selectedElem.style.color = inputColor.value;
 							editColor.style.backgroundColor = inputColor.value;	
@@ -445,17 +444,86 @@ editToolbar.forEach(function(elem) {
 
 // 绑定键盘事件
 document.addEventListener('keydown', function(evt){
-	if (evt.keyCode === 46) {
-		if (selectedElem) {
-			selectedElem.parentNode.removeChild(selectedElem);
-			editToolbar.forEach(function(elem) {
-				elem.style.display = 'none';
-			});
-			editTransformer.style.display = 'none';	
+
+	if (selectedElem && selectedElem.tagName != 'path') {
+		switch(evt.keyCode){
+			case 46 :
+				selectedElem.parentNode.removeChild(selectedElem);
+				editToolbar.forEach(function(elem) {
+					elem.style.display = 'none';
+				});
+				editTransformer.style.display = 'none';
+				break;
+
+			case 38 :
+				editTransformer.style.top = selectedElem.style.top = selectedElem.offsetTop - 1 + 'px';
+				break;
+			case 39 :
+				editTransformer.style.left = selectedElem.style.left = selectedElem.offsetLeft + 1 + 'px';
+				break;
+			case 40 :
+				editTransformer.style.top = selectedElem.style.top = selectedElem.offsetTop + 1 + 'px';
+				break;
+			case 37 :
+				editTransformer.style.left = selectedElem.style.left = selectedElem.offsetLeft - 1 + 'px';
+				break;
 		}
+	}
+
+
+	//变换对象是svg
+	if (selectedElem && selectedElem.tagName == 'path') {
+				
+				var scale = canvasEditor.getSvgTransform(selectedElem,'scale');
+				var translate = canvasEditor.getSvgTransform(selectedElem, 'translate');
+				var translateX = translate.match(/translate\((\S*)\,/)[1],
+					translateY = translate.match(/\,(\S*)\)/)[1];
+		
+		switch(evt.keyCode){
+			case 38 :
+
+				translateY = parseInt(translateY) - 1;
+
+				editTransformer.style.top = editTransformer.offsetTop - 1 + 'px';
+
+				break;
+			case 39 :
+				translateX = parseInt(translateX) + 1;
+				
+				editTransformer.style.left = editTransformer.offsetLeft + 1 + 'px';
+				break;
+			case 40 :
+				translateY = parseInt(translateY) + 1;
+			
+				editTransformer.style.top = editTransformer.offsetTop + 1 + 'px';
+				break;
+			case 37 :
+				translateX = parseInt(translateX) - 1;
+				editTransformer.style.left = editTransformer.offsetLeft - 1 + 'px';
+				break;
+		}
+		selectedElem.setAttribute('transform', 'translate(' + translateX + ',' + translateY +')' + ' ' + scale );
+
 		
 	}
+	
+
 })
+
+// editTransformer.style.left = selectedElem.style.left = moveX + 'px';
+// 		editTransformer.style.top = selectedElem.style.top = moveY + 'px';
+
+// 		//如果点击对象为svg的path
+// 		if(selectedElem.tagName == 'path'){
+// 			var scale = canvasEditor.getSvgTransform(selectedElem,'scale');
+// 			console.log(scale)
+// 			selectedElem.setAttribute('transform', 'translate(' + moveX + ',' + moveY +')' + ' ' + scale);
+// 			editTransformer.style.left = moveX + 'px';
+// 			editTransformer.style.top = moveY + 'px';
+// 		}
+
+
+
 /*
  *新建文字
  */
@@ -496,7 +564,7 @@ canvasEditor.addText();
  */
 var cancel = document.querySelector('.cancel');
 cancel.addEventListener('click', function(e) {
-	canvasEditor.clearStyle(textToolbar, imageToolbar, editTransformer);
+	canvasEditor.clearStyle(textToolbar, imageToolbar, editTransformer, svgToolbar);
 });
 
 
@@ -513,7 +581,7 @@ tabButtons.forEach(function(elem) {
 		var sideFront = document.querySelector('.side-front'),
 			sideBack = document.querySelector('.side-back');
 
-		canvasEditor.clearStyle(textToolbar, imageToolbar, editTransformer);
+		canvasEditor.clearStyle(textToolbar, svgToolbar, imageToolbar, editTransformer);
 
 		if (!elem.classList.contains('panel-tabs-active')) {
 			tabButtons.forEach(function(elem) {
@@ -588,85 +656,13 @@ tabButtons.forEach(function(elem) {
 
 })();
 
-// 下载图片功能实现
-(function downloadImg() {
 
-	// 获取名片正反面
-	var sideFront = document.querySelector('.side-front'),
-		sideBack = document.querySelector('.side-back');
-
-	var sideAll = [];
-
-	var zip = new JSZip();
-
-	if (sideFront) {
-		sideAll.push(sideFront);
-	}
-	if (sideBack) {
-		sideAll.push(sideBack);
-	}
-
-	// 获取保存按钮
-	var saveButton = document.querySelector('.save');
-
-	if (saveButton) {
-		// 绑定按钮事件
-		saveButton.onclick = function() {
-				var a =[];
-				sideAll.forEach(function(elem) {
-					if (window.getComputedStyle(elem).display == 'none') {
-
-						elem.style.display = 'block';
-						saveToZip(elem)
-						elem.style.display = 'none';
-						
-					}else{
-						saveToZip(elem);
-					}
-
-				});
-
-				setTimeout(function(){
-					zip.generateAsync({
-						type: "blob"
-					}).then(function(content) {
-						saveAs(content, "拿去打印吧.zip");
-					});
-				},500);
-				
-			
-		}
-
-	}
-
-	//图片添加到zip文件中
-	function saveToZip(dom) {
-		var imgName;
-		var imgData;
-
-		html2canvas(dom).then(function(canvas) {
-
-			imgData = canvas.toDataURL();
-
-			if (dom.className == 'side-front') {
-				imgName = '正面.png'
-			} else if (dom.className == 'side-back') {
-				imgName = '反面.png'
-			}
-
-			zip.file(imgName, imgData.replace(/^data:image\/\w+;base64,/, ''), {
-				base64: true
-			});
-
-		})
-	}
-})();
 
 //隐藏控件
 var sidebarUser = document.querySelector('.sidebar-user');
 if (sidebarUser) {
 	sidebarUser.addEventListener('click', function(evt){
-		canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar);
+		canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar, svgToolbar);
 	})
 }
 
@@ -693,111 +689,115 @@ svgTransformer.addEventListener('mousedown', function(evt){
 	originRect.translate = canvasEditor.getSvgTransform(selectedElem, 'translate', true)||'';
 
 })
-document.addEventListener('mousemove', function(evt){
-		if (scaling) {
-			switch(direction){
-				case 'e':
-					scaleE(evt);
-					console.log(selectedElem.getAttribute('transform'))
+
+;(function scaleElem(){
+	document.addEventListener('mousemove', function(evt){
+			if (scaling) {
+				switch(direction){
+					case 'e':
+						scaleE(evt);
+						break;
+
+					case 's':
+						scaleS(evt);
+						break;
+					case 'se':
+						scaleE(evt);
+						var selectedElemRectInner = selectedElem.getBoundingClientRect();
+						var finalHeight = selectedElemRectInner.width/originRect.prop;
+						var scaleValue = finalHeight/originRect.height;
+						var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
+						var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
+
+						selectedElem.setAttribute('transform', translate + '' + 'scale(' + scale[0] + ',' + scaleValue + ')');
+						canvasEditor.showEditTransformer();	
+						break;
+					case 'n':
+						scaleN(evt)
+						
+						break;
+
+					case 'w':
+						scaleW(evt)
+						break;
+
+					case 'nw':
+						scaleN(evt);
+						scaleW(evt);
+					break;
+					case 'ne':
+						scaleN(evt);
+						scaleE(evt);
+					break;
+					case 'sw':
+						scaleS(evt);
+						scaleW(evt);
 					break;
 
-				case 's':
-					scaleS(evt);
-					break;
-				case 'se':
-					scaleE(evt);
-					var selectedElemRectInner = selectedElem.getBoundingClientRect();
-					var finalHeight = selectedElemRectInner.width/originRect.prop;
-					var scaleValue = finalHeight/originRect.height;
-					var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
-					var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
-
-					selectedElem.setAttribute('transform', translate + '' + 'scale(' + scale[0] + ',' + scaleValue + ')');
-					canvasEditor.showEditTransformer();	
-					break;
-				case 'n':
-					scaleN(evt)
-					
-					break;
-
-				case 'w':
-					scaleW(evt)
-					break;
-
-				case 'nw':
-					scaleN(evt);
-					scaleW(evt);
-				break;
-				case 'ne':
-					scaleN(evt);
-					scaleE(evt);
-				break;
-				case 'sw':
-					scaleS(evt);
-					scaleW(evt);
-				break;
-
+				}
 			}
+	})
+
+	document.addEventListener('mouseup', function(evt){
+		scaling = false
+	})
+
+	function scaleE(evt){
+		var addWidth = evt.clientX - originX;
+		var finalWidth = selectedElemRect.width + addWidth;
+		var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
+		var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
+		var scaleValue = finalWidth/originRect.width;
+
+		if (scaleValue>0) {
+			selectedElem.setAttribute('transform', translate + ' ' + 'scale(' + scaleValue + ',' + scale[1] + ')');
+			canvasEditor.showEditTransformer();	
 		}
-})
-
-document.addEventListener('mouseup', function(evt){
-	scaling = false
-})
-
-function scaleE(evt){
-	var addWidth = evt.clientX - originX;
-	var finalWidth = selectedElemRect.width + addWidth;
-	var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
-	var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
-	var scaleValue = finalWidth/originRect.width;
-
-	if (scaleValue>0) {
-		selectedElem.setAttribute('transform', translate + ' ' + 'scale(' + scaleValue + ',' + scale[1] + ')');
-		canvasEditor.showEditTransformer();	
 	}
-}
 
-function scaleS(evt){
-	var addHeight = evt.clientY - originY;
-	var finalHeight = selectedElemRect.height + addHeight;
-	var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
-	var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
-	var scaleValue = finalHeight/originRect.height;
+	function scaleS(evt){
+		var addHeight = evt.clientY - originY;
+		var finalHeight = selectedElemRect.height + addHeight;
+		var translate = canvasEditor.getSvgTransform(selectedElem, 'translate')||'';
+		var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);
+		var scaleValue = finalHeight/originRect.height;
 
-	if (scaleValue>0) {
-		selectedElem.setAttribute('transform', translate + '' + 'scale(' + scale[0] + ',' + scaleValue + ')');
-		canvasEditor.showEditTransformer();	
+		if (scaleValue>0) {
+			selectedElem.setAttribute('transform', translate + '' + 'scale(' + scale[0] + ',' + scaleValue + ')');
+			canvasEditor.showEditTransformer();	
+		}
+			
 	}
+
+	function scaleN(evt){
+		var addHeight = evt.clientY - originY;
+		var finalHeight = selectedElemRect.height - addHeight;
+		var scaleValue = finalHeight/originRect.height;
+		var translate = canvasEditor.getSvgTransform(selectedElem, 'translate', true)||'';
+		var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);	
+
+		if (scaleValue>0) {
+			selectedElem.setAttribute('transform', 'translate(' + translate[0] + ',' + (parseInt(originRect.translate[1])+addHeight) + ')' + '' + 'scale(' + scale[0] + ',' + scaleValue + ')');
+			canvasEditor.showEditTransformer();		
+		}
 		
-}
-
-function scaleN(evt){
-	var addHeight = evt.clientY - originY;
-	var finalHeight = selectedElemRect.height - addHeight;
-	var scaleValue = finalHeight/originRect.height;
-	var translate = canvasEditor.getSvgTransform(selectedElem, 'translate', true)||'';
-	var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);	
-
-	if (scaleValue>0) {
-		selectedElem.setAttribute('transform', 'translate(' + translate[0] + ',' + (parseInt(originRect.translate[1])+addHeight) + ')' + '' + 'scale(' + scale[0] + ',' + scaleValue + ')');
-		canvasEditor.showEditTransformer();		
 	}
-	
-}
-function scaleW(evt){
-	var addWidth = evt.clientX - originX;
-	var finalWidth = selectedElemRect.width - addWidth;
-	var scaleValue = finalWidth/originRect.width;
-	var translate = canvasEditor.getSvgTransform(selectedElem, 'translate', true)||'';
-	var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);		
+	function scaleW(evt){
+		var addWidth = evt.clientX - originX;
+		var finalWidth = selectedElemRect.width - addWidth;
+		var scaleValue = finalWidth/originRect.width;
+		var translate = canvasEditor.getSvgTransform(selectedElem, 'translate', true)||'';
+		var scale = canvasEditor.getSvgTransform(selectedElem, 'scale', true);		
 
-	if (scaleValue>0) {
-		selectedElem.setAttribute('transform', 'translate(' + (parseInt(originRect.translate[0])+addWidth) + ',' + translate[1] + ')' + '' + 'scale(' + scaleValue + ',' + scale[1] + ')');
-		canvasEditor.showEditTransformer();	
+		if (scaleValue>0) {
+			selectedElem.setAttribute('transform', 'translate(' + (parseInt(originRect.translate[0])+addWidth) + ',' + translate[1] + ')' + '' + 'scale(' + scaleValue + ',' + scale[1] + ')');
+			canvasEditor.showEditTransformer();	
+		}
+			
 	}
-		
-}
+})()
+
+
 
 
 //添加svg元素
@@ -851,3 +851,9 @@ if (buttonAddSvg) {
 
 	})	
 }
+
+document.addEventListener('click', function(evt){
+	if (evt.target.className == 'content-main-user') {
+		canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar, svgToolbar, sizeSelect, familySelect, transparentRange);
+	}
+});

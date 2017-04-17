@@ -55,6 +55,7 @@
 				canChecking = true;		
 			}
 		}
+
 		regName.onblur = function(){
 			if (canChecking) {
 				confirmMsg.checking();
@@ -106,6 +107,14 @@
 		var password = document.querySelector('.password');
 		var confirmMsg = new ConfirmMsg(password.parentNode);
 		var reg = /^(\w){6,20}$/;
+
+		password.onkeyup = function(){
+			if (this.value.length < 8) {
+				confirmMsg.alert('密码长度至少为8个字符');
+			}else{
+				confirmMsg.alert('');
+			}
+		}
 
 		password.onblur = function(){
 			if (reg.test(this.value)) {
@@ -162,7 +171,7 @@
 					if (xhr.readyState == 4 && xhr.status == 200) {
 						switch(xhr.responseText){
 							case '1':
-								location.href = '/';
+								location.reload();
 								break;
 							case '0':
 								confirmMsgPassword.alert('密码错误');
@@ -197,7 +206,7 @@
 					switch(xhr.responseText){
 						case '1':
 							console.log('注册成功!');
-							location.href = '/';
+							location.reload();
 						break;
 					}
 				}

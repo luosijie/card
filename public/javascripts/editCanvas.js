@@ -1,8 +1,8 @@
 
-	'use strick';
 	var CanvasEditor = function(){
 
 	};
+
 	CanvasEditor.prototype = {
 		constructor: CanvasEditor,
 
@@ -334,7 +334,8 @@
 						if(value){
 							return result[1].split(',');
 						}else{
-							return result[0];						}	
+							return result[0];	
+						}	
 					}else{
 						if (value) {
 							return [1,1];	
