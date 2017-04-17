@@ -13,6 +13,7 @@ var CardSize = require('../models/cardSize');
 var User = require('../models/user');
 
 /* GET home page. */
+
 router.get('/', function(req, res, next) {
 
   Card
