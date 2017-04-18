@@ -60,12 +60,12 @@ function uploadImages(){
 						base64Images[i].style.backgroundImage = 'url("' + '/tempImg/' + responseData[i] + '")';
 					}
 					// 成功返回后执行回调
-					resolve('uploadImages is ok');
+					resolve();
 				}
 				xhr.open('POST', '/uploadImages', true);
 				xhr.send(formDataImg);
 			}else{
-				resolve('uploadImages is ok');
+				resolve();
 			}
 		}
 	});
@@ -82,7 +82,7 @@ function uploadCover(){
 		var promiseAll = Promise.all([saveCover(sideFront), saveCover(sideBack)]);
 		
 		promiseAll
-		.then(function(_resolve){
+		.then(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', '/uploadCovers', true);
 			xhr.send(formDataCover);
@@ -91,7 +91,6 @@ function uploadCover(){
 				resolve(JSON.parse(xhr.responseText));
 			}
 		})
-
 
 		function saveCover(dom){
 

@@ -8,6 +8,7 @@ var selectedElem, //选中元素
 	svgToolbar = document.querySelector('.edit-toolbar-svg'),
 	editTransformer = document.querySelector('.edit-transformer'); //变换控件
 
+
 var sizeSelect = document.querySelector('.size-select'),
 	familySelect = document.querySelector('.family-select'),
 	transparentRange = document.querySelector('.transparent-range');
@@ -30,23 +31,39 @@ document.addEventListener('selectstart', function(e) {
 	e.returnValue = false;
 });
 
+var aligning = false;
+var alignArry = [];
+document.addEventListener('keydown', function(evt){
+	if (evt.keyCode === 16){
+		aligning = true;
+	}
+})
+document.addEventListener('keyup', function(evt){
+	if (evt.keyCode === 16){
+		aligning = false;
+	}
+})
 //handle：给画布添加点击事件
 editCanvas.addEventListener('click', function(e) {
+	
 
 	//清除所有选中效果
 	canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar, svgToolbar, sizeSelect, familySelect, transparentRange);
 
 	//判断点击对象是否可编辑元素
 	if (e.target.classList.contains('edit-elem')) {
-
 		selectedElem = e.target;
 		selectedElemRect = selectedElem.getBoundingClientRect();
 
-		if (selectedElem.tagName == 'path') {
+		//判断是否是svg元素
+		if (aligning) {
+			editTransformer = document.querySelector('.align-active');
+		}else if (selectedElem.tagName == 'path') {
 			editTransformer = document.querySelector('.svg-transformer');
 		}else{
 			editTransformer = document.querySelector('.edit-transformer');
 		}
+		
 
 		//显示变换控件
 		canvasEditor.showEditTransformer();
@@ -857,3 +874,7 @@ document.addEventListener('click', function(evt){
 		canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar, svgToolbar, sizeSelect, familySelect, transparentRange);
 	}
 });
+
+(function alignItem(){
+
+})();
