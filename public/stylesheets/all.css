@@ -1065,7 +1065,7 @@ ul.thame-list li:hover, ul.size-list li:hover{
 }
 ul.template{
 	overflow-y: auto;
-	width: 100%;
+	width: calc(100%+6px);
 	height: 100%;
 	margin-right: -18px;
 }

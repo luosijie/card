@@ -151,8 +151,6 @@ router.get('/personal', function(req, res, next){
 	}else{
 		res.redirect('/');
 	}
-	
-	
 })
 
 // 处理文件上传
@@ -215,6 +213,7 @@ router.post('/uploadDom', function(req, res){
 				card.save(function(err){
 					cardTheme.cards.push(card._id);
 					cardTheme.save();
+					res.send('1');
 				});
 			}else{
 				var cardTheme = new CardTheme({
@@ -236,6 +235,7 @@ router.post('/uploadDom', function(req, res){
 					card.save(function(err){
 						cardTheme.cards.push('2');
 						cardTheme.save();
+						res.send(1);
 					});
 				})
 			}

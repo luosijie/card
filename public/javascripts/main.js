@@ -31,18 +31,7 @@ document.addEventListener('selectstart', function(e) {
 	e.returnValue = false;
 });
 
-var aligning = false;
-var alignArry = [];
-document.addEventListener('keydown', function(evt){
-	if (evt.keyCode === 16){
-		aligning = true;
-	}
-})
-document.addEventListener('keyup', function(evt){
-	if (evt.keyCode === 16){
-		aligning = false;
-	}
-})
+
 //handle：给画布添加点击事件
 editCanvas.addEventListener('click', function(e) {
 	
@@ -56,9 +45,7 @@ editCanvas.addEventListener('click', function(e) {
 		selectedElemRect = selectedElem.getBoundingClientRect();
 
 		//判断是否是svg元素
-		if (aligning) {
-			editTransformer = document.querySelector('.align-active');
-		}else if (selectedElem.tagName == 'path') {
+		if (selectedElem.tagName == 'path') {
 			editTransformer = document.querySelector('.svg-transformer');
 		}else{
 			editTransformer = document.querySelector('.edit-transformer');
@@ -331,7 +318,6 @@ editToolbar.forEach(function(elem) {
 
 						svg.appendChild(clipboard);
 
-						console.log(selectedElemRect.left - editCanvasRect.left + selectedElemRect.width + offsetValue);
 					}else{
 						clipboard.style.left = parseInt(selectedElem.offsetLeft) + selectedElemRect.width + offsetValue + 'px';
 						editSide.appendChild(clipboard);
@@ -874,7 +860,3 @@ document.addEventListener('click', function(evt){
 		canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar, svgToolbar, sizeSelect, familySelect, transparentRange);
 	}
 });
-
-(function alignItem(){
-
-})();

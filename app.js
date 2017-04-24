@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var vhost = require('vhost');
 
 var app = express();
 var hbs = require('hbs');
@@ -16,6 +17,7 @@ var mongoStore = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
 
 var dbUrl = 'mongodb://localhost/card';
 
@@ -66,8 +68,10 @@ app.use(function(req,res,next){
   next();
 })
 
+app.use(vhost('admin.*', admin));
 app.use('/', routes);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

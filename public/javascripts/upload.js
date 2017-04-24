@@ -23,6 +23,7 @@ popComfirmButton.addEventListener('click', function(){
 		return uploadCover();
 	})
 	.then(function(coverData){
+
 		uploadDom(coverData);
 	})
 
@@ -79,15 +80,22 @@ function uploadCover(){
 			sideBack = document.querySelector('.side-back');
 		var formDataCover = new FormData(form);
 
-		var promiseAll = Promise.all([saveCover(sideFront), saveCover(sideBack)]);
+		// var promiseAll = Promise.all([saveCover(sideFront), saveCover(sideBack)]);
 		
-		promiseAll
+		// promiseAll
+		// .then(function(){
+			
+		// })
+
+		saveCover(sideFront)
+		.then(function(resolve){
+			return saveCover(sideBack)
+		})
 		.then(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', '/uploadCovers', true);
 			xhr.send(formDataCover);
 			xhr.onload = function(){
-				//返回封面地址数组，注意0为反面，1为正面
 				resolve(JSON.parse(xhr.responseText));
 			}
 		})
@@ -95,13 +103,16 @@ function uploadCover(){
 		function saveCover(dom){
 
 			var promise = new Promise(function(_resolve, reject){
+
 				if (window.getComputedStyle(dom).display == 'none') {
 					dom.style.display = 'block';
 					html2canvas(dom).then(function(canvas){
 						var imgData = canvas.toDataURL();
 						formDataCover.append('coverImg', imgData);
-						dom.style.display = 'none';
+						
 						_resolve();
+						dom.style.display = 'none';
+
 					})
 				}else{
 					html2canvas(dom).then(function(canvas){
@@ -110,6 +121,7 @@ function uploadCover(){
 						_resolve();
 					})
 				}
+
 			})
 
 			return promise;
@@ -125,8 +137,8 @@ function uploadDom(coverData){
 	var promise = new Promise(function(resolce, reject){
 		var sideFront = document.querySelector('.side-front'),
 			sideBack = document.querySelector('.side-back');
-		var coverFront = coverData[1],
-			coverBack = coverData[0];
+		var coverFront = coverData[0],
+			coverBack = coverData[1];
 		var form = document.querySelector('#form');
 		var formDataDom = new FormData(form);
 
