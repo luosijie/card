@@ -39,6 +39,12 @@ hbs.registerHelper("equal", function(v1, v2, options){
   }
 });
 
+hbs.registerHelper('section', function(name, options){
+  if(!this._sections) this._sections = {};
+  this._sections[name] = options.fn(this);
+  return null;
+})
+
 
 
 // uncomment after placing your favicon in /public

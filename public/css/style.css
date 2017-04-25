@@ -165,7 +165,7 @@ a, a:hover, a:focus {
 /*sidebar navigation*/
 
 #sidebar {
-    width: 210px;
+    width: 180px;
     height: 100%;
     position: fixed;
     background: #2a3542;
@@ -280,7 +280,7 @@ ul.sidebar-menu li a{
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
-    font-size: 12px;
+    font-size: 14px;
     outline: none;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -326,7 +326,7 @@ ul.sidebar-menu li a.active i {
 /*main content*/
 
 #main-content {
-    margin-left: 210px;
+    margin-left: 180px;
 }
 
 .header, .footer {
@@ -380,7 +380,7 @@ a.logo span {
 .notify-row {
     float: left;
     margin-top: 15px;
-    margin-left: 92px;
+    margin-left: 50px;
 }
 
 ul.top-menu > li > a {
@@ -2048,7 +2048,7 @@ ul.labels-info li a i {
     background: #41cac0;
     color: #fff;
     border-radius: 0 4px 0 0;
-    -webkit-border-radius: 0 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
     min-height: 80px;
 }
 
@@ -2143,6 +2143,7 @@ ul.inbox-pagination li {
 
 .mail-option .chk-all input[type=checkbox] {
     margin-top: 0;
+    vertical-align: middle;
 }
 
 .mail-option .btn-group a.all {
@@ -3892,7 +3893,8 @@ table.sliders tr td {
 
 /*custom select*/
 
-span.customSelect {
+span.customSelect, .search-input {
+    vertical-align: middle;
     font-size:12px;
     background-color: #ffffff;
     padding:10px;
@@ -4517,19 +4519,25 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 .product-list .pro-img-box {
     position: relative;
 }
+.edit-container {
+    color: #fff;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    bottom: -25px;
+    position: absolute;
+}
+
 .adtocart {
-    background: #fc5959;
     width: 50px;
     height: 50px;
+    margin:0 5px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     color: #fff;
     display: inline-block;
     text-align: center;
     border: 3px solid #fff;
-    left: 45%;
-    bottom: -25px;
-    position: absolute;
 }
 
 .adtocart i{
@@ -4611,8 +4619,8 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 /*footer*/
 
 .site-footer {
-    background: #5b6e84;
-    color: #fff;
+
+    color: #858585;
     padding: 10px 0;
 }
 
@@ -4632,4 +4640,17 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .site-min-height {
     min-height: 900px;
+}
+
+/*custom css*/
+.pro-sort button{
+    padding: 8px 14px;
+}
+.panel-template{
+    position: fixed;
+    width: calc(100% - 210px);
+    z-index: 1;
+}
+.product-list{
+    margin-top: 126px;
 }
