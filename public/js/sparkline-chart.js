@@ -1,126 +1,78 @@
-var Script = function () {
+var echartBar = function(){
+    var barChart = echarts.init(document.getElementById('barchart'));
+    // 指定图表的配置项和数据
+    var option = {
+        color: ['#fff'],
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        grid: {
+            bottom: 0,
+            top: 0,
+            left: 0,
+            right: 0
+        },
+        tooltip: {
+            show: true,
+            trigger: 'item'
+        },
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            show: false,
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {
+            show: false
+        },
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20, 20, 36, 10, 10, 20],
+        }]
+    };
 
-    $(".sparkline").each(function(){
-        var $data = $(this).data();
+    // 使用刚指定的配置项和数据显示图表。
+    barChart.setOption(option);
+}()
 
-        $data.valueSpots = {'0:': $data.spotColor};
+var echartLine = function(){
+    var barChart = echarts.init(document.getElementById('sparkline'));
+    // 指定图表的配置项和数据
+    var option = {
+        color: ['#fff'],
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        grid: {
+            bottom: 0,
+            top: 0,
+            left: 0,
+            right: 0
+        },
+        tooltip: {
+            show: true,
+            trigger: 'item'
+        },
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            show: false,
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {
+            show: false
+        },
+        series: [{
+            name: '销量',
+            type: 'line',
+            data: [5, 20, 36, 10, 10, 20, 20, 36, 10, 10, 20],
+        }]
+    };
 
-        $(this).sparkline( $data.data || "html", $data,
-        {
-            tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-        });
+    // 使用刚指定的配置项和数据显示图表。
+    barChart.setOption(option);
+}()
 
-
-
-
-    });
-
-//sparkline chart
-
-    $("#barchart").sparkline([5,3,6,7,5,6,4,2,3,4,6,8,9,10,8,6,5,7,6,5,4,7,4], {
-        type: 'bar',
-        height: '65',
-        barWidth: 8,
-        barSpacing: 5,
-        barColor: '#fff'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-
-    });
-
-
-    $("#linechart").sparkline([1,5,3,7,9,3,6,4,7,9,7,6,2], {
-        type: 'line',
-        width: '300',
-        height: '75',
-        fillColor: '',
-        lineColor: '#fff',
-        lineWidth: 2,
-        spotColor: '#fff',
-        minSpotColor: '#fff',
-        maxSpotColor: '#fff',
-        highlightSpotColor: '#fff',
-        highlightLineColor: '#ffffff',
-        spotRadius: 4,
-        highlightLineColor: '#ffffff'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-
-
-
-    });
-
-    $("#pie-chart").sparkline([2,1,1,1], {
-        type: 'pie',
-        width: '100',
-        height: '100',
-        borderColor: '#00bf00',
-        sliceColors: ['#41CAC0', '#A8D76F', '#F8D347', '#EF6F66']
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-    });
-
-    //work progress bar
-
-    $("#work-progress1").sparkline([5,6,7,5,9,6,4], {
-        type: 'bar',
-        height: '20',
-        barWidth: 5,
-        barSpacing: 2,
-        barColor: '#5fbf00'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-    });
-
-    $("#work-progress2").sparkline([3,2,5,8,4,7,5], {
-        type: 'bar',
-        height: '22',
-        barWidth: 5,
-        barSpacing: 2,
-        barColor: '#58c9f1'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-    });
-
-    $("#work-progress3").sparkline([1,6,9,3,4,8,5], {
-        type: 'bar',
-        height: '22',
-        barWidth: 5,
-        barSpacing: 2,
-        barColor: '#8075c4'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-    });
-
-    $("#work-progress4").sparkline([9,4,9,6,7,4,3], {
-        type: 'bar',
-        height: '22',
-        barWidth: 5,
-        barSpacing: 2,
-        barColor: '#ff6c60'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-    });
-
-    $("#work-progress5").sparkline([6,8,5,7,6,8,3], {
-        type: 'bar',
-        height: '22',
-        barWidth: 5,
-        barSpacing: 2,
-        barColor: '#41cac0'
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//            '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'
-    });
-
-    $("#pie-chart2").sparkline([2,1,1,1], {
-        type: 'pie',
-        width: '250',
-        height: '125',
-        sliceColors: ['#41CAC0', '#A8D76F', '#F8D347', '#EF6F66']
-//        tooltipFormat: '<span style="display:block; padding:0px 10px 12px 0px;">' +
-//    '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)</span>'});
-
-    });
-
-}();
