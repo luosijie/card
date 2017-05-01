@@ -903,7 +903,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .chart .content {
     display: inline-block;
     width: 300px;
-    height: 71px;
+    height: 88px;
 }
 
 .chart-tittle .title {
@@ -4619,6 +4619,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
    
     color: #858585;
     padding: 10px 0;
+    padding-left: 250px;
 }
 
 .go-top {
@@ -4654,4 +4655,15 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     bottom: -25px;
     position: absolute;
     justify-content: center;
+}
+
+.new-user-chart{
+    width: 100%;
+    height: 395px;
+}
+
+.user-list-footer{
+    border-top: 1px solid #eee;
+    text-align: center;
+    padding: 10px 0 0px;
 }
