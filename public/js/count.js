@@ -17,7 +17,42 @@ function countAni(count, target){
     }, int_speed);
 }
 
-countAni(495, $('.count'));
-countAni(947, $('.count2'));
-countAni(328, $('.count3'));
-countAni(10328, $('.count4'));
+;(function loadNewUser(){
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(){
+        var num = parseInt(xhr.responseText);
+        countAni(num, $('.count'));
+    }
+    xhr.open('GET','/newuser', true);
+    xhr.send();
+})()
+
+;(function loadPageView(){
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(){
+        var num = parseInt(xhr.responseText);
+        countAni(num, $('.count2'));
+    }
+    xhr.open('GET','/pageview', true);
+    xhr.send();
+})()
+
+;(function loadTempNum(){
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(){
+        var num = parseInt(xhr.responseText);
+        countAni(num, $('.count3'));
+    }
+    xhr.open('GET','/tempnum', true);
+    xhr.send();
+})()
+
+;(function loadTotalUser(){
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(){
+        var num = parseInt(xhr.responseText);
+        countAni(num, $('.count4'));
+    }
+    xhr.open('GET','/totaluser', true);
+    xhr.send();
+})()
