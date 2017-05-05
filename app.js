@@ -18,6 +18,7 @@ var mongoStore = require('connect-mongo')(session);
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
+var api = require('./routes/api');
 
 var dbUrl = 'mongodb://localhost/card';
 
@@ -75,6 +76,7 @@ app.use(function(req,res,next){
 })
 
 app.use(vhost('admin.*', admin));
+app.use(vhost('api.*', api));
 app.use('/', routes);
 app.use('/users', users);
 

@@ -4534,6 +4534,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     text-align: center;
     border: 3px solid #fff;
     margin: 0 5px;
+    cursor: pointer;
 
 }
 

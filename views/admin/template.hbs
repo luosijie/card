@@ -54,17 +54,19 @@
                    
 
                       <div class="row product-list">
-                          <div class="col-md-4">
+                      {{#each cards}}
+
+                          <div class="col-md-4" data-id="{{_id}}">
                               <section class="panel">
                                   <div class="pro-img-box">
-                                      <img src="img/product-list/pro-1.jpg" alt=""/>
+                                      <img src="coverImg/{{coverFront}}" alt=""/>
                                       <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
+                                        <div class="adtocart btn-primary">
                                           <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
+                                        </div>  
+                                        <div class="adtocart btn-danger temp-delete">
                                           <i class="fa fa-trash"></i>
-                                        </a> 
+                                        </div> 
                                       </div>
                                       
 
@@ -73,205 +75,15 @@
                                   <div class="panel-body text-center">
                                       <h4>
                                           <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
+                                              {{title}}
                                           </a>
                                       </h4>
-                                      <p class="price">$300.00</p>
+                                      <p class="price">{{theme}}</p>
                                   </div>
                               </section>
                           </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro1.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
 
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro2.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro3.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro-1.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro2.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro1.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro3.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
-                          <div class="col-md-4">
-                              <section class="panel">
-                                  <div class="pro-img-box">
-                                      <img src="img/product-list/pro-1.jpg" alt=""/>
-                                      <div class="edit-container">
-                                        <a class="adtocart btn-primary" href="#">
-                                          <i class="fa fa-pencil"></i>
-                                        </a>  
-                                        <a class="adtocart btn-danger" href="#">
-                                          <i class="fa fa-trash"></i>
-                                        </a> 
-                                      </div>
-                                  </div>
-
-                                  <div class="panel-body text-center">
-                                      <h4>
-                                          <a href="#" class="pro-title">
-                                              Leopard Shirt Dress
-                                          </a>
-                                      </h4>
-                                      <p class="price">$300.00</p>
-                                  </div>
-                              </section>
-                          </div>
+                      {{/each}}
                       </div>
                   
               <!-- page end-->
@@ -285,6 +97,7 @@
     <!-- js placed at the end of the document so the pages load faster -->
 
     <script src="js/jquery.customSelect.min.js" ></script>
+    <script src='js/tempCtrl.js'></script>
     <script type="text/javascript">
         
         $(function(){

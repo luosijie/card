@@ -1,28 +1,48 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var path = require('path');
+var User = require('../models/user');
+var Card = require('../models/card');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('admin/index', {
-  	title: '心方设计',
-  	layout: 'admin/layout_admin'
-  });
+	  res.render('admin/index', {
+	  	title: '心方设计',
+	  	layout: 'admin/layout_admin'
+	  });
 });
 
+// 模板管理
 router.get('/template', function(req, res, next){
-	res.render('admin/template', {
-		title: '心方设计',
-		layout: 'admin/layout_admin'
+	Card
+	.find()
+	.exec(function (err, data) {
+		res.render('admin/template', {
+			cards: data,
+			title: '心方设计',
+			layout: 'admin/layout_admin'
+		})
 	})
+	
 })
 
+
+// 用户管理
 router.get('/user', function(req, res, next){
-	res.render('admin/user', {
-		title: '心方设计',
-		layout: 'admin/layout_admin'
+
+	User
+	.find()
+	.exec(function(err, data){
+		res.render('admin/user', {
+			users: data,
+			title: '心方设计',
+			layout: 'admin/layout_admin'
+		})
 	})
 })
 
+//消息中心
 router.get('/message', function(req, res, next){
 	res.render('admin/message',{
 		title: '心方设计',
