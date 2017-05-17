@@ -53,18 +53,56 @@ if (cateMenu) {
 			elem.className = 'active';
 
 			var type = evt.target.type;
-			console.log(type)
+
 			var dom = document.querySelector('.temp-list');
 			getCards(type, dom)
 			.then(function(cards){
-				var  cardTemplate = document.querySelector('#card_template')
-				var template = Handlebars.compile(cardTemplate.innerHTML);
-				dom.innerHTML = template(cards);
-				console.log(cards);
+				// var  cardTemplate = document.querySelector('#card_template')
+				// var template = Handlebars.compile(cardTemplate.innerHTML);
+				// dom.innerHTML = template(cards);
+				// console.log(cards);
+				
+				document.querySelector('.temp-list').innerHTML = '<card-list></card-list>';
+
+				Vue.component('card-list', {
+					template: ' <ul>\
+									<li v-for="item in items">\
+							   			<a :href="item._id | formatURL">\
+											<img :src="item.coverFront | formatSRC">\
+											<p>{{item.title}}</p>\
+										</a>\
+										<i v-if="item.flag" class="fa fa-heart collection collection-active"></i>\
+										<i v-else class="fa fa-heart collection"></i>\
+							   		</li>\
+							   	</ul> ',
+
+					data: function(){
+						return { items: cards}
+					},
+
+					filters:{
+						formatURL: function(value){
+							return '/edituser/' + value
+						},
+						formatSRC: function(value){
+							return '/coverImg/' + value
+						}
+					}
+				})
+
+				new Vue({
+					el: ' .temp-list',
+				})
+				
+
 			});
 		})
 	})	
 }
+
+
+
+
 
 
 //编辑模式获取分类模板
@@ -74,19 +112,41 @@ if (cateMenu) {
 	cateMenuLi.forEach(function(elem){
 		elem.addEventListener('click', function(evt){
 			var type = evt.target.type;
-			var dom = document.querySelector('.template');
+			var dom = document.querySelector('.template-edit');
 			getCards(type, dom)
 			.then(function(cards){
-				var  jsTemplate = document.querySelector('#edit_card_template')
-				var template = Handlebars.compile(jsTemplate.innerHTML);
-				dom.innerHTML = template(cards);
+
+				document.querySelector('.template-container').innerHTML = '<card-list-edit></card-list-edit>';
+
+				Vue.component('card-list-edit', {
+					template: ' <ul class="template-edit">\
+									<li v-for="item in items" :data-id=" item._id ">\
+										<img :src="item.coverFront | formatSRC" alt="">\
+							    	</li> \
+							    </ul>',
+
+					data: function(){
+						return { items: cards }
+					},
+
+					filters: {
+						formatSRC: function(value){
+							return '/coverImg/' + value
+						}
+					}
+				})
+
+				new Vue({
+					el: '.template-container'
+				})
+
 			});
 		})
 	})	
 }
 
 //编辑模式选择魔板编辑
-var templateUl = document.querySelector('.template');
+var templateUl = document.querySelector('.template-edit');
 if (templateUl) {
 	templateUl.addEventListener('click', function(evt){
 		var elem = evt.target.parentNode;

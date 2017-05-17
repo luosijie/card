@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="template-container">
-			<ul class="template">
+			<ul class="template-edit">
 			 {{#each tempCards}}
 				<li data-id="{{_id}}">
 					<img src="/coverImg/{{coverFront}}" alt="">
@@ -306,14 +306,8 @@
 			740&nbsp;X&nbsp;457
 		</div>
 	</div>
-	<script id="edit_card_template" type="text/x-handlebars-template">
-			 \{{#each this}}
-				<li data-id="\{{_id}}">
-					<img src="/coverImg/\{{coverFront}}" alt="">
-				</li>
-			 \{{/each}}
-	</script>
-	<script src="/javascripts/thirdjs/handlebars-v4.0.5.js"></script>
+
+	<script src='/assets/vue.min.js'></script>
 	<!-- 引入第三方插件html2canvas实现html转换图片 -->
 	<script src="/javascripts/thirdjs/html2canvas.js"></script>
 	<!-- 引入jszip实现图片打包下载 -->

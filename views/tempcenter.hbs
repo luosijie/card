@@ -53,25 +53,7 @@
 		<p>Copyright©luosj.cn 闽ICP备xxxxxxx号</p>
 	</footer>
 	{{> logreg}}
-	<script src="/javascripts/thirdjs/handlebars-v4.0.5.js"></script>
 	<script src='/assets/vue.min.js'></script>
 	<script src='/javascripts/account.js'></script>
 	<script src="/javascripts/getCards.js"></script>
-	<script id="card_template" type="text/x-handlebars-template">
-		<ul>
-			\{{#each this}}
-				<li>
-					<a href="/edituser/\{{_id}}">
-						<img src="/coverImg/\{{coverFront}}" alt="">
-						<p>\{{title}}</p>
-					</a>
-					\{{#if flag}}
-						<i class="fa fa-heart collection collection-active"></i>
-					\{{else}}
-						<i class="fa fa-heart collection"></i>
-					\{{/if}}
-				</li>
-			\{{/each}}
-		</ul>
-	</script>
 </body>
