@@ -1,1 +1,0 @@
-"use strict";var svgContainer=document.querySelector("svg");

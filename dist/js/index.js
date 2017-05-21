@@ -1,1 +1,0 @@
-"use strict";!function(){for(var e=document.querySelector(".slide-blok"),t=document.querySelector(".temp-type"),l=t.querySelectorAll("li"),o=document.querySelectorAll(".slide-content"),c=0;c<l.length;c++)!function(t){l[t].onclick=function(l){e.style.left=l.target.offsetLeft+"px",o.forEach(function(e){e.style.display="none"}),o[t].style.display="block"}}(c)}();
