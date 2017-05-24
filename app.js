@@ -17,12 +17,8 @@ var mongoStore = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var admin = require('./routes/admin');
-var api = require('./routes/api');
 
 var dbUrl = 'mongodb://localhost/card';
-
-// app.listen(3000, '192.168.0.113');
 
 mongoose.connect(dbUrl);
 
