@@ -71,8 +71,6 @@ app.use(function(req,res,next){
   next();
 })
 
-app.use(vhost('admin.*', admin));
-app.use(vhost('api.*', api));
 app.use('/', routes);
 app.use('/users', users);
 
