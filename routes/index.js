@@ -181,7 +181,7 @@ router.post('/uploadCovers', function(req, res){
 		var imgList = [];
 
 		for(let i = 0; i < imgDatas.length; i++){
-			elem = imgDatas[i].replace(/^data:image\/\w+;base64,/, '');
+			var elem = imgDatas[i].replace(/^data:image\/\w+;base64,/, '');
 			var dataBuffer = new Buffer(elem, 'base64');
 			var imgName = 'cover' + Date.now() + i + '.png';
 			//写入系统文件
