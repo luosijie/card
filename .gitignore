@@ -2,5 +2,5 @@
 node_modules/
 
 # ignore test imgages
-public/coverImg/
-public/tempImg/
+public/coverImg/*
+public/tempImg/*
