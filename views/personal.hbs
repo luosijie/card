@@ -2,14 +2,16 @@
 <header>
 		<div class="container">
 			<div class="logo">
-				<img src="/images/logo_home.png" alt="">
-
+				<img src="/images/logo_white.png" alt="">
+        <span>CARD</span>
 			</div>
 			
 			<div class="log-reg">
 			{{#if loginedUser}}
 				<div class="logined">
-					<img src="images/logo_white.png" alt="">
+					<span class="photo">
+				  	<img src="images/logo_white.png">
+				  </span>		
 					<span class="user-name"><a href="/personal">{{loginedUser.username}}</a></span>
 					<span class="logout"><a href="/logout">登出</a></span>
 				</div>
@@ -85,6 +87,6 @@
 		<p>Copyright©luosj.cn 闽ICP备10047083号</p>
 	</footer>
 	
-	<script src="javascripts/index.js"></script>
-	<script src="javascripts/personal.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/personal.js"></script>
 	</body>

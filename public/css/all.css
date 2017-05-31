@@ -109,6 +109,15 @@ header{
 }
 .logo{
 	float: left;
+	opacity: 0.8;
+}
+.logo img{
+	width: 24px;
+	vertical-align: middle;
+}
+.logo span{
+	font-size: 24px;
+	vertical-align: middle;
 }
 ul.menu, .log-reg{
 	float: right;
@@ -127,12 +136,22 @@ ul.menu li a{
 	color: #04981a;
 	cursor: pointer;
 }
-.logined>img{
+.logined>span.photo{
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
 	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 	background: black;
 	vertical-align: middle;
 	margin: 10px;
+}
+.logined>span.photo>img{
+	width: 18px;
+	position: absolute;
+	left: 6px;
+	top: 6px;
 }
 .logined .logout{
 	margin-left: 10px;
@@ -452,12 +471,21 @@ footer .container{
 	height: 180px;
 	float: left;
 }
-.site-info img{
-
-	margin-top: 30px;
-}
 .site-info p{
 	margin-top: 10px;
+}
+.site-info .logo-footer{
+	opacity: 0.4;
+}
+.site-info .logo-footer>img{
+	width: 60px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+.site-info .logo-footer>span{
+	font-size: 70px;
+	vertical-align: middle;
+	color: white;
 }
 .author-info img{
 	border:3px solid rgba(224,224,224,0.3);
@@ -1258,10 +1286,9 @@ font-size: 16px;
 	color: #858585;
 }
 .user-avatar .user-photo{
-	width: 120px;
-	height: 120px;
+	width: 100px;
+	height: 100px;
 	background: #000000;
-	border-radius: 50%;
 	margin: 36px 0;
 }
 

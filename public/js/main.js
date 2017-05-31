@@ -278,6 +278,7 @@ document.addEventListener('mouseup', function(e) {
 /**
  *handle:给编辑控件添加点击事件
  */
+
 editToolbar.forEach(function(elem) {
 	elem.childNodes.forEach(function(elem) {
 		elem.addEventListener('click', function(e) {

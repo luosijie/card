@@ -20,7 +20,5 @@
     "serve-favicon": "~2.3.0",
     "vhost": "^3.0.2"
   },
-  "devDependencies": {
-    "babel-preset-es2015": "^6.24.1"
-  }
+  "devDependencies": {}
 }
