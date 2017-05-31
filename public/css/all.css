@@ -1270,7 +1270,7 @@ font-size: 16px;
 /*个人中心*/
 .personal-top{
 
-	min-height: 400px;
+	min-height: 385px;
 	min-width: 1190px;
 	text-align: center;
 	background: -webkit-linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),
