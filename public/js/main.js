@@ -844,8 +844,6 @@ if (buttonAddSvg) {
 		if(regPath.test(svgContent.value)){
 			pathHtml = svgContent.value.match(regPath)[0].replace(/<\/path>/, '').replace(/<path>/, '').replace('PSgrad_0', date);
 			svg.innerHTML += pathHtml;
-			console.log(svg);
-			console.log(pathHtml);
 		}
 		var path = document.querySelectorAll('path');
 		path.forEach(function(elem){
