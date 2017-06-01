@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
 	}
 
   	res.render('index', { 
-  		title: '心方设计',
+  		title: 'Card',
   		business: businessArry,
   		personality: personalityArry
   	});
@@ -83,7 +83,7 @@ router.get('/edituser(/:name)?', function(req, res, next){
 			}
 		})
 		res.render('edituser',{
-			title:'心方设计',
+			title:'Card',
 			tempCards: cards,
 			editCard: editCard
 			});
@@ -119,7 +119,7 @@ router.get('/tempcenter', function(req, res, next){
 	  	}
 
 	  	res.render('tempcenter', { 
-	  		title: '心方设计',
+	  		title: 'Card',
 	  		card: data 
 	  	});
 	  })
@@ -131,7 +131,7 @@ router.get('/upload', function(req, res, next){
 	if (req.session.user.username != 'admin') {
 		res.redirect('/');
 	}
-	res.render('upload',{title:'心方设计'});
+	res.render('upload',{title:'Card'});
 })
 
 router.get('/personal', function(req, res, next){
