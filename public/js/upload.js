@@ -39,20 +39,22 @@ function uploadImages(){
 
 		if (editImages.length) {
 			// 将需要上传的base64图片放入formDataImg中
+
 			editImages.forEach(function(elem){
 				var originImgData = window.getComputedStyle(elem).backgroundImage;
 				var imgData = originImgData.replace(/url\("/, '').replace(/"\)/, '');
-				var base64Reg = /^data:image\/\w+;base64,/
+				var base64Reg = /^data:image\/\w+;base64,/	
 
 				//筛选出base64格式的图片，排除服务器图片
 				if (base64Reg.test(imgData)){
 					formDataImg.append('editImg', imgData);
-					base64Images.push(elem);	
+					base64Images.push(elem);
+
 				}
-
 			})
-
+      
 			if (formDataImg.has('editImg')) {
+				
 				var xhr = new XMLHttpRequest();
 				xhr.onload = function(){
 					var responseData = JSON.parse(xhr.responseText);
@@ -63,6 +65,7 @@ function uploadImages(){
 					resolve();
 				}
 				xhr.open('POST', '/uploadImages', true);
+
 				xhr.send(formDataImg);
 			}else{
 				resolve();

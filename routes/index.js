@@ -177,7 +177,6 @@ router.post('/uploadImages', function(req, res){
 //存储封面信息
 router.post('/uploadCovers', function(req, res){
 	var form = new multiparty.Form();
-	console.log('uploadCovers');
 	form.parse(req, function(err, fields, files){
 		var imgDatas = fields.coverImg;
 		var imgList = [];
@@ -215,9 +214,13 @@ router.post('/uploadDom', function(req, res){
 					coverBack: fields.coverBack[0], //反面封面
 				})  
 				card.save(function(err){
-					cardTheme.cards.push(card._id);
-					cardTheme.save();
-					res.send('1');
+					if (err) {
+						console.log(err);
+					}else{
+					  cardTheme.cards.push(card._id);
+						cardTheme.save();
+						res.send('1');	
+					}
 				});
 			}else{
 				var cardTheme = new CardTheme({
@@ -237,9 +240,13 @@ router.post('/uploadDom', function(req, res){
 						coverBack: fields.coverBack[0], //反面封面
 					})
 					card.save(function(err){
-						cardTheme.cards.push('2');
-						cardTheme.save();
-						res.send(1);
+						if (err) {
+							console.log(err);
+						}else{
+							cardTheme.cards.push('2');
+							cardTheme.save();
+							res.send(1);
+						}
 					});
 				})
 			}
