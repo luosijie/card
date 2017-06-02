@@ -167,7 +167,8 @@ router.post('/uploadImages', function(req, res){
 			var imgName = 'img' + Date.now() + i + '.png';
 			//写入系统文件
 			fs.writeFileSync(path.join(__dirname, '../public/tempImg/') + imgName , dataBuffer);
-			imgList.push(imgName)
+			imgList.push(imgName);
+			console.log('uploadTempImg');
 		}
 		res.send(imgList);
 	})
@@ -176,6 +177,7 @@ router.post('/uploadImages', function(req, res){
 //存储封面信息
 router.post('/uploadCovers', function(req, res){
 	var form = new multiparty.Form();
+	console.log('uploadCovers');
 	form.parse(req, function(err, fields, files){
 		var imgDatas = fields.coverImg;
 		var imgList = [];
@@ -195,6 +197,7 @@ router.post('/uploadCovers', function(req, res){
 //上传名片Dom信息
 router.post('/uploadDom', function(req, res){
 	var form = new multiparty.Form();
+	console.log('uploadDom');
 	form.parse(req, function(err, fields, files){
 		
 		CardTheme.findOne({title: fields.theme[0]}, function(err, cardTheme){

@@ -38,7 +38,6 @@ function uploadImages(){
 		var formDataImg = new FormData();
 
 		if (editImages.length) {
-
 			// 将需要上传的base64图片放入formDataImg中
 			editImages.forEach(function(elem){
 				var originImgData = window.getComputedStyle(elem).backgroundImage;
