@@ -157,6 +157,7 @@ router.get('/personal', function(req, res, next){
 // 处理文件上传
 router.post('/uploadImages', function(req, res){
 	var form = new multiparty.Form();
+	console.log('uploadImgages');
 	form.parse(req, function(err, fields, files){
 		var imgDatas = fields.editImg;
 		var imgList = [];
@@ -177,6 +178,7 @@ router.post('/uploadImages', function(req, res){
 //存储封面信息
 router.post('/uploadCovers', function(req, res){
 	var form = new multiparty.Form();
+	console.log('uploadCovers');
 	form.parse(req, function(err, fields, files){
 		var imgDatas = fields.coverImg;
 		var imgList = [];

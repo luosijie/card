@@ -70,6 +70,8 @@ function uploadImages(){
 			}else{
 				resolve();
 			}
+		}else{
+			resolve();
 		}
 	});
 	return promise;
@@ -113,6 +115,7 @@ function uploadCover(){
 						formDataCover.append('coverImg', imgData);
 						
 						_resolve();
+						console.log('uploadCover');
 						dom.style.display = 'none';
 
 					})
@@ -121,6 +124,7 @@ function uploadCover(){
 						var imgData = canvas.toDataURL();
 						formDataCover.append('coverImg', imgData);
 						_resolve();
+						console.log('uploadCover');
 					})
 				}
 
