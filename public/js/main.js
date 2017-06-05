@@ -32,6 +32,14 @@ document.addEventListener('selectstart', function(e) {
 });
 
 
+document.oncontextmenu = function(evt){
+	evt.preventDefault();
+}
+document.addEventListener('mousedown', function(evt){
+	if (evt.button == 2) {
+			canvasEditor.clearStyle(editTransformer, textToolbar, imageToolbar, svgToolbar, sizeSelect, familySelect, transparentRange);
+	}
+})
 //handle：给画布添加点击事件
 editCanvas.addEventListener('click', function(e) {
 	
