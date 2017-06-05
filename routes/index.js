@@ -243,9 +243,9 @@ router.post('/uploadDom', function(req, res){
 						if (err) {
 							console.log(err);
 						}else{
-							cardTheme.cards.push('2');
+							cardTheme.cards.push(card._id);
 							cardTheme.save();
-							res.send(1);
+							res.send('1');
 						}
 					});
 				})

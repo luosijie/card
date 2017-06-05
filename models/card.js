@@ -20,7 +20,7 @@ var CardSchema = new Schema({
 
 	collector: [{
 		type: String,
-		unique: true,
+		// unique: true,
 		ref: 'User'
 	}],
 
