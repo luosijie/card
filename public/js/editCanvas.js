@@ -124,6 +124,8 @@
 				var selectedElemWidth = selectedElem.getBoundingClientRect().width; //当前选中的图片的宽度
 				var imgPro = img.height/img.width; //图片的宽高比
 
+				console.log(imgPro);
+
 				selectedElem.style.height = editTransformer.style.height = selectedElemWidth*imgPro + 'px';
 
 			};
@@ -147,7 +149,6 @@
 				var newImg = document.createElement('div');
 				var img = document.createElement('img');
 				img.src = e.target.result;
-
 				console.log(img.width);
 
 				newImg.classList.add('edit-elem');

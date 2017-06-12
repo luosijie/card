@@ -128,10 +128,11 @@ router.get('/tempcenter', function(req, res, next){
 /*GET upload page.*/
 router.get('/upload', function(req, res, next){
 
-	if (req.session.user.username != 'admin') {
+	if (req.session.user.username && req.session.user.username == 'admin') {
+		res.render('upload',{title:'Card'});
+	}else{
 		res.redirect('/');
 	}
-	res.render('upload',{title:'Card'});
 })
 
 router.get('/personal', function(req, res, next){
