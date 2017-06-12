@@ -135,7 +135,6 @@
 			var self = this;
 			var reader = new FileReader();
 			var file;
-
 			if (inputElem) {
 				inputElem.addEventListener('change', function(e){
 					file = inputElem.files[0];
@@ -148,6 +147,8 @@
 				var newImg = document.createElement('div');
 				var img = document.createElement('img');
 				img.src = e.target.result;
+
+				console.log(img.width);
 
 				newImg.classList.add('edit-elem');
 				newImg.classList.add('edit-image');

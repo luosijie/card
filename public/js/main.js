@@ -71,216 +71,225 @@ editCanvas.addEventListener('click', function(e) {
 });
 
 //拖拽移动
-var dragging, tLeft, tTop;
-var moveElem = document.querySelector('.move');
-document.addEventListener('mousedown', function(e) {
-	if (selectedElem) {
-		selectedElemRect = selectedElem.getBoundingClientRect();
-	}
-	if (e.target == editTransformer || e.target.parentNode == moveElem) {
-
-		canvasEditor.clearStyle(textToolbar, imageToolbar, svgToolbar);
-		dragging = true;
-		tLeft = e.clientX - selectedElemRect.left; //鼠标按下时和选中元素的距离:x坐标
-		tTop = e.clientY - selectedElemRect.top; //鼠标按下时和选中元素的距离:y坐标
-	}
-});
-document.addEventListener('mouseup', function(e) {
-	dragging = false;
-});
-document.addEventListener('mousemove', function(e) {
-	if (dragging) {
-		var moveX = e.clientX - tLeft - editCanvasRect.left,
-			moveY = e.clientY - tTop - editCanvasRect.top;
-
-		editTransformer.style.left = selectedElem.style.left = moveX + 'px';
-		editTransformer.style.top = selectedElem.style.top = moveY + 'px';
-
-		//如果点击对象为svg的path
-		if(selectedElem.tagName == 'path'){
-			var scale = canvasEditor.getSvgTransform(selectedElem,'scale');
-
-			selectedElem.setAttribute('transform', 'translate(' + moveX + ',' + moveY +')' + ' ' + scale);
-			editTransformer.style.left = moveX + 'px';
-			editTransformer.style.top = moveY + 'px';
-			
+;(function(){
+  var dragging, tLeft, tTop;
+	var moveElem = document.querySelector('.move');
+	document.addEventListener('mousedown', function(e) {
+		if (selectedElem) {
+			selectedElemRect = selectedElem.getBoundingClientRect();
 		}
-	}
-});
+		if (e.target == editTransformer || e.target.parentNode == moveElem) {
+
+			canvasEditor.clearStyle(textToolbar, imageToolbar, svgToolbar);
+			dragging = true;
+			tLeft = e.clientX - selectedElemRect.left; //鼠标按下时和选中元素的距离:x坐标
+			tTop = e.clientY - selectedElemRect.top; //鼠标按下时和选中元素的距离:y坐标
+		}
+	});
+	document.addEventListener('mouseup', function(e) {
+		dragging = false;
+	});
+	document.addEventListener('mousemove', function(e) {
+		if (dragging) {
+			var moveX = e.clientX - tLeft - editCanvasRect.left,
+				moveY = e.clientY - tTop - editCanvasRect.top;
+
+			editTransformer.style.left = selectedElem.style.left = moveX + 'px';
+			editTransformer.style.top = selectedElem.style.top = moveY + 'px';
+
+			//如果点击对象为svg的path
+			if(selectedElem.tagName == 'path'){
+				var scale = canvasEditor.getSvgTransform(selectedElem,'scale');
+
+				selectedElem.setAttribute('transform', 'translate(' + moveX + ',' + moveY +')' + ' ' + scale);
+				editTransformer.style.left = moveX + 'px';
+				editTransformer.style.top = moveY + 'px';
+				
+			}
+		}
+	});
+})()
+
 
 /**
  *旋转元素
  */
-var tMouseX, //转换鼠标X为旋转中心坐标
-	tMouseY, //转换鼠标Y为旋转中心坐标
-	angle, //旋转角度
-	rotating, //旋转开关(true||flase)
-	rotateElemRect, //旋转元素坐标
-	centerX, centerY; //中心点坐标
+;(function(){
+  var tMouseX, //转换鼠标X为旋转中心坐标
+			tMouseY, //转换鼠标Y为旋转中心坐标
+			angle, //旋转角度
+			rotating, //旋转开关(true||flase)
+			rotateElemRect, //旋转元素坐标
+			centerX, centerY; //中心点坐标
 
-var rotateControl = document.querySelector('.rotate'),
-	angleRotateControl;
+		var rotateControl = document.querySelector('.rotate'),
+			angleRotateControl;
 
-document.addEventListener('mousedown', function(e) {
-	if (selectedElem) {
-		selectedElemRect = selectedElem.getBoundingClientRect();
-		centerX = selectedElemRect.left + selectedElemRect.width / 2;
-		centerY = selectedElemRect.top + selectedElemRect.height / 2;
+		document.addEventListener('mousedown', function(e) {
+			if (selectedElem) {
+				selectedElemRect = selectedElem.getBoundingClientRect();
+				centerX = selectedElemRect.left + selectedElemRect.width / 2;
+				centerY = selectedElemRect.top + selectedElemRect.height / 2;
 
-		angleRotateControl = Math.atan((selectedElemRect.height / 2) / (selectedElemRect.width / 2)) * 180 / Math.PI;
-	}
-	if (e.target.parentNode == rotateControl) {
-		canvasEditor.clearStyle(textToolbar, imageToolbar);
-		rotating = true;
-	}
-});
-
-document.addEventListener('mouseup', function(e) {
-	rotating = false;
-	if (editTransformer.style.display == 'block') {
-		canvasEditor.showEditPanel();
-	}
-
-});
-
-document.addEventListener('mousemove', function(e) {
-	if (rotating) {
-		tMouseX = e.clientX - centerX;
-		tMouseY = e.clientY - centerY;
-		angle = Math.abs(Math.atan(tMouseY / tMouseX) * 180 / Math.PI);
-
-		/**
-		 *象限判断 从右上角开始 顺时针
-		 */
-		if (tMouseX >= 0 && tMouseY <= 0) {
-			if (angle > angleRotateControl) {
-				angle = 360 - (angle - angleRotateControl);
-			} else if (angle <= angleRotateControl) {
-				angle = angleRotateControl - angle;
+				angleRotateControl = Math.atan((selectedElemRect.height / 2) / (selectedElemRect.width / 2)) * 180 / Math.PI;
 			}
-		}
-		if (tMouseX >= 0 && tMouseY > 0) {
-			angle = angle + angleRotateControl;
-		}
-		if (tMouseX <= 0 && tMouseY >= 0) {
-			angle = 180 + angleRotateControl - angle;
-		}
-		if (tMouseX <= 0 && tMouseY < 0) {
-			angle = 180 + angleRotateControl + angle;
-		}
+			if (e.target.parentNode == rotateControl) {
+				canvasEditor.clearStyle(textToolbar, imageToolbar);
+				rotating = true;
+			}
+		});
 
-			selectedElem.style.transform = editTransformer.style.transform = 'rotate(' + angle + 'deg)';	
+		document.addEventListener('mouseup', function(e) {
+			rotating = false;
+			if (editTransformer.style.display == 'block') {
+				canvasEditor.showEditPanel();
+			}
 
-	}
-});
+		});
+
+		document.addEventListener('mousemove', function(e) {
+			if (rotating) {
+				tMouseX = e.clientX - centerX;
+				tMouseY = e.clientY - centerY;
+				angle = Math.abs(Math.atan(tMouseY / tMouseX) * 180 / Math.PI);
+
+				/**
+				 *象限判断 从右上角开始 顺时针
+				 */
+				if (tMouseX >= 0 && tMouseY <= 0) {
+					if (angle > angleRotateControl) {
+						angle = 360 - (angle - angleRotateControl);
+					} else if (angle <= angleRotateControl) {
+						angle = angleRotateControl - angle;
+					}
+				}
+				if (tMouseX >= 0 && tMouseY > 0) {
+					angle = angle + angleRotateControl;
+				}
+				if (tMouseX <= 0 && tMouseY >= 0) {
+					angle = 180 + angleRotateControl - angle;
+				}
+				if (tMouseX <= 0 && tMouseY < 0) {
+					angle = 180 + angleRotateControl + angle;
+				}
+
+					selectedElem.style.transform = editTransformer.style.transform = 'rotate(' + angle + 'deg)';	
+
+			}
+		});
+		window.angle = angle;
+})()
+
 
 /**
  *缩放元素
  */
-var scaling, selectedElemProp;
+;(function(){
+  var scaling, selectedElemProp;
 
-var selectedElemOffsetWidth,
-	selectedElemOffsetHeight;
+	var selectedElemOffsetWidth,
+		selectedElemOffsetHeight;
 
-var scaleOrigin, //缩放起始点
-	scaleOriginRect,
-	scaleOriginX,
-	scaleOriginY;
+	var scaleOrigin, //缩放起始点
+		scaleOriginRect,
+		scaleOriginX,
+		scaleOriginY;
 
-var oppsiteCorner, //缩放元素左上角坐标
-	oppsiteCornerRect,
-	oppsiteCornerX,
-	oppsiteCornerY;
+	var oppsiteCorner, //缩放元素左上角坐标
+		oppsiteCornerRect,
+		oppsiteCornerX,
+		oppsiteCornerY;
 
-var ANGLE; //旋转的角度
+	var ANGLE; //旋转的角度
 
-var preX, preY; //鼠标按下的坐标
+	var preX, preY; //鼠标按下的坐标
 
-editTransformer.addEventListener('mousedown', function(e) {
-	if (selectedElem) {
-		selectedElemRect = selectedElem.getBoundingClientRect();
-	}
-	if (e.target.parentNode.className == 'scale' && selectedElem.classList.contains('edit-image')) {
-		scaling = true;
-		selectedElemOffsetWidth = selectedElem.offsetWidth;
-		selectedElemOffsetHeight = selectedElem.offsetHeight;
+	editTransformer.addEventListener('mousedown', function(e) {
+		if (selectedElem) {
+			selectedElemRect = selectedElem.getBoundingClientRect();
+		}
+		if (e.target.parentNode.className == 'scale' && selectedElem.classList.contains('edit-image')) {
+			scaling = true;
+			selectedElemOffsetWidth = selectedElem.offsetWidth;
+			selectedElemOffsetHeight = selectedElem.offsetHeight;
 
-		selectedElemProp = selectedElemRect.width / selectedElemRect.height; //选中元素的宽高比
+			selectedElemProp = selectedElemRect.width / selectedElemRect.height; //选中元素的宽高比
 
-		preX = e.clientX;
-		preY = e.clientY;
-	}
-
-	if (angle) {
-		ANGLE = angle * Math.PI / 180;
-	} else {
-		ANGLE = 0;
-	}
-
-	scaleOrigin = document.querySelector('.scale');
-	scaleOriginRect = scaleOrigin.getBoundingClientRect();
-
-	scaleOriginX = scaleOriginRect.left + scaleOriginRect.width / 2; //缩放起始点的X坐标
-	scaleOriginY = scaleOriginRect.top + scaleOriginRect.height / 2; //缩放起始点的y坐标
-
-	oppsiteCorner = document.querySelector('.move');
-	oppsiteCornerRect = oppsiteCorner.getBoundingClientRect();
-	oppsiteCornerX = oppsiteCornerRect.left + oppsiteCornerRect.width / 2; //缩放元素左上角x坐标
-	oppsiteCornerY = oppsiteCornerRect.top + oppsiteCornerRect.height / 2; //缩放元素左上角y坐标
-});
-
-document.addEventListener('mousemove', function(e) {
-	if (scaling) {
-
-		var addWidth, addHeight, //缩放后增加的宽高
-			offsetX, offsetY, //鼠标偏移的宽高
-			scaledX, scaledY, //缩放后端点的坐标
-			midX, midY,
-			finalX, finalY, finalWidth, finalHeight, //缩放后的元素坐标和宽高
-			angleCross, //缩放图形的对角线和宽的夹角
-			crossline; //缩放后的对角线
-
-		editCanvasRect = editCanvas.getBoundingClientRect(); //重新获取editCanvas是坐标，防止浏览器窗口变化产生错位
-
-		angleCross = Math.atan(selectedElemOffsetHeight / selectedElemOffsetWidth);
-
-		offsetX = e.clientX - preX;
-		offsetY = offsetX * Math.tan(ANGLE + angleCross);
-
-		if (ANGLE >= 0 && ANGLE <= Math.PI / 2 || ANGLE >= Math.PI && ANGLE <= Math.PI * 3 / 2) {
-			offsetY = e.clientY - preY;
-			offsetX = offsetY * Math.tan(Math.PI / 2 - angleCross - ANGLE);
+			preX = e.clientX;
+			preY = e.clientY;
 		}
 
-		scaledX = scaleOriginX + offsetX;
-		scaledY = scaleOriginY + offsetY;
+		if (angle) {
+			ANGLE = angle * Math.PI / 180;
+		} else {
+			ANGLE = 0;
+		}
 
-		midX = (scaledX + oppsiteCornerX) / 2;
-		midY = (scaledY + oppsiteCornerY) / 2;
+		scaleOrigin = document.querySelector('.scale');
+		scaleOriginRect = scaleOrigin.getBoundingClientRect();
 
-		crossline = Math.sqrt(Math.pow((scaledX + 2 - oppsiteCornerX), 2) + Math.pow((scaledY + 2 - oppsiteCornerY), 2));
+		scaleOriginX = scaleOriginRect.left + scaleOriginRect.width / 2; //缩放起始点的X坐标
+		scaleOriginY = scaleOriginRect.top + scaleOriginRect.height / 2; //缩放起始点的y坐标
 
-		finalWidth = crossline * Math.cos(angleCross);
-		finalHeight = crossline * Math.sin(angleCross);
+		oppsiteCorner = document.querySelector('.move');
+		oppsiteCornerRect = oppsiteCorner.getBoundingClientRect();
+		oppsiteCornerX = oppsiteCornerRect.left + oppsiteCornerRect.width / 2; //缩放元素左上角x坐标
+		oppsiteCornerY = oppsiteCornerRect.top + oppsiteCornerRect.height / 2; //缩放元素左上角y坐标
+	});
 
-		finalX = midX - finalWidth / 2 - editCanvasRect.left;
-		finalY = midY - finalHeight / 2 - editCanvasRect.top;
+	document.addEventListener('mousemove', function(e) {
+		if (scaling) {
 
-		selectedElem.style.left = editTransformer.style.left = finalX + 'px';
-		selectedElem.style.top = editTransformer.style.top = finalY + 'px';
-		selectedElem.style.width = editTransformer.style.width = finalWidth + 'px';
-		selectedElem.style.height = editTransformer.style.height = finalHeight + 'px';
+			var addWidth, addHeight, //缩放后增加的宽高
+				offsetX, offsetY, //鼠标偏移的宽高
+				scaledX, scaledY, //缩放后端点的坐标
+				midX, midY,
+				finalX, finalY, finalWidth, finalHeight, //缩放后的元素坐标和宽高
+				angleCross, //缩放图形的对角线和宽的夹角
+				crossline; //缩放后的对角线
 
-		//构建辅助三角形求出变换后的宽高 m:n = p : sinx - p;
+			editCanvasRect = editCanvas.getBoundingClientRect(); //重新获取editCanvas是坐标，防止浏览器窗口变化产生错位
+
+			angleCross = Math.atan(selectedElemOffsetHeight / selectedElemOffsetWidth);
+
+			offsetX = e.clientX - preX;
+			offsetY = offsetX * Math.tan(ANGLE + angleCross);
+
+			if (ANGLE >= 0 && ANGLE <= Math.PI / 2 || ANGLE >= Math.PI && ANGLE <= Math.PI * 3 / 2) {
+				offsetY = e.clientY - preY;
+				offsetX = offsetY * Math.tan(Math.PI / 2 - angleCross - ANGLE);
+			}
+
+			scaledX = scaleOriginX + offsetX;
+			scaledY = scaleOriginY + offsetY;
+
+			midX = (scaledX + oppsiteCornerX) / 2;
+			midY = (scaledY + oppsiteCornerY) / 2;
+
+			crossline = Math.sqrt(Math.pow((scaledX + 2 - oppsiteCornerX), 2) + Math.pow((scaledY + 2 - oppsiteCornerY), 2));
+
+			finalWidth = crossline * Math.cos(angleCross);
+			finalHeight = crossline * Math.sin(angleCross);
+
+			finalX = midX - finalWidth / 2 - editCanvasRect.left;
+			finalY = midY - finalHeight / 2 - editCanvasRect.top;
+
+			selectedElem.style.left = editTransformer.style.left = finalX + 'px';
+			selectedElem.style.top = editTransformer.style.top = finalY + 'px';
+			selectedElem.style.width = editTransformer.style.width = finalWidth + 'px';
+			selectedElem.style.height = editTransformer.style.height = finalHeight + 'px';
+
+			//构建辅助三角形求出变换后的宽高 m:n = p : sinx - p;
 
 
-	}
+		}
 
-});
+	});
 
-document.addEventListener('mouseup', function(e) {
-	scaling = false;
-});
+	document.addEventListener('mouseup', function(e) {
+		scaling = false;
+	});
+})()
 
 
 /**
@@ -581,8 +590,11 @@ cancel.addEventListener('click', function(e) {
 
 
 //添加图片
-var addImg = document.querySelector('.add-img-input');
-canvasEditor.addImg(addImg);
+;(function(){
+  var addImg = document.querySelector('.add-img-input');
+  canvasEditor.addImg(addImg);	
+})()
+
 
 //正反面切换
 var panelTabs = document.querySelector('.panel-tabs');
@@ -616,10 +628,11 @@ tabButtons.forEach(function(elem) {
 		}
 
 	});
-});
+});	
+
 
 //主题类型选择下拉框
-(function dropMenu() {
+;(function dropMenu() {
 
 	var type = document.querySelector('.type');
 
