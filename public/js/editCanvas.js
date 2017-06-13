@@ -118,15 +118,15 @@
 				var img = document.createElement('img');
 				img.src = e.target.result;
 
-				selectedElem.style.background = 'url(' + e.target.result + ')';
-				selectedElem.style.backgroundSize = '100% 100%';
+				img.onload = function () {
+				  selectedElem.style.background = 'url(' + e.target.result + ')';
+					selectedElem.style.backgroundSize = '100% 100%';
 
-				var selectedElemWidth = selectedElem.getBoundingClientRect().width; //当前选中的图片的宽度
-				var imgPro = img.height/img.width; //图片的宽高比
+					var selectedElemWidth = selectedElem.getBoundingClientRect().width; //当前选中的图片的宽度
+					var imgPro = img.height/img.width; //图片的宽高比
 
-				console.log(imgPro);
-
-				selectedElem.style.height = editTransformer.style.height = selectedElemWidth*imgPro + 'px';
+					selectedElem.style.height = editTransformer.style.height = selectedElemWidth*imgPro + 'px';	
+				}
 
 			};
 
@@ -149,27 +149,27 @@
 				var newImg = document.createElement('div');
 				var img = document.createElement('img');
 				img.src = e.target.result;
-				console.log(img.width);
+        
+        img.onload = function () {
+          newImg.classList.add('edit-elem');
+					newImg.classList.add('edit-image');
+					newImg.classList.add('default-image');
 
-				newImg.classList.add('edit-elem');
-				newImg.classList.add('edit-image');
-				newImg.classList.add('default-image');
+					newImg.style.background = 'url(' + e.target.result + ')';
+					newImg.style.backgroundSize = '100% 100%';
+					newImg.style.width =img.width + 'px';
+					newImg.style.height = img.height + 'px';
 
-				newImg.style.background = 'url(' + e.target.result + ')';
-				newImg.style.backgroundSize = '100% 100%';
-				newImg.style.width =img.width + 'px';
-				newImg.style.height = img.height + 'px';
+					selectedElem = newImg;
 
-				selectedElem = newImg;
+					editSide.appendChild(newImg);
 
-				editSide.appendChild(newImg);
-
-				//显示变换控件
-				self.showEditTransformer();
-			
-				//显示编辑面板
-				self.showEditPanel();
-
+					//显示变换控件
+					self.showEditTransformer();
+				
+					//显示编辑面板
+					self.showEditPanel();	
+        }
 			};
 
 		},
