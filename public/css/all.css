@@ -1098,6 +1098,7 @@ ul.template-edit{
 	margin-right: -18px;
 }
 ul.template-edit>li{
+	height: 173px;
 	margin-bottom: 15px;
 	background-color: white;
 	cursor: pointer;
