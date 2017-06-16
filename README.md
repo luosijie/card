@@ -1,4 +1,4 @@
-
+![home](https://github.com/luosijie/Front-end-Blog/blob/master/img/a.PNG?raw=true)
 ## 一个简单的图片处理网站
 
 ```
