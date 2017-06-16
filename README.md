@@ -52,7 +52,7 @@
 ![structure](https://github.com/luosijie/Front-end-Blog/blob/master/img/upload.PNG?raw=true)
 
 #### 个人中心
-
+我的收藏列表和基本账户设置
 ![personal](https://github.com/luosijie/Front-end-Blog/blob/master/img/personal.PNG?raw=true)
 
 
