@@ -1,10 +1,11 @@
 
 #### 一个简单的图片处理网站
+使用Node+Express和MongoDB+mongoose
+------
 ```
 通过管理员编辑上传名片模板
 可以让用户在线编辑并下载png格式图片直接打印
 ```
-使用Node+Express和MongoDB+mongoose
 
 ## 安装
 1. 安装MongoDB并成功启动
