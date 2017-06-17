@@ -320,7 +320,13 @@ router.post('/regist', function(req, res, next){
 			email: fields.mailaddress[0],
 			password: fields.password[0]
 		})
-		user.save();
+		user.save(function(err){
+			if (err) {
+				console.log(err)
+			}else{
+				console.log('注册成功');
+			}
+		});
 		res.send('1');//注册成功
 	})
 })
