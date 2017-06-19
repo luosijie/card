@@ -5,12 +5,6 @@
 ![Database:MongoDB](https://img.shields.io/badge/Database-MongoDB-green.svg?style=flate)
 ![License:GPL](https://img.shields.io/cran/l/devtools.svg)
 
-```
-通过管理员编辑上传名片模板
-可以让用户在线编辑并下载png格式图片直接打印
-```
-
-
 
 ![home](https://github.com/luosijie/Front-end-Blog/blob/master/img/a.PNG?raw=true)
 
@@ -33,6 +27,10 @@
 5. 访问 localhost:3000
 
 ## 实现功能
+```
+通过管理员编辑上传名片模板
+可以让用户在线编辑并下载png格式图片直接打印
+```
 1. 登录注册
 2. 图片简单处理
 3. 名片模板的上传和保存
