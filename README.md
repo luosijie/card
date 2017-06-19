@@ -1,8 +1,8 @@
 ## 一个简单的图片处理网站
 
-![Language:JavaScript](https://img.shields.io/badge/Language-%20JavaScript%20-orange.svg)
-![Language:Node](https://img.shields.io/badge/Language-%20Node%20-green.svg)
-![Database:MongoDB](https://img.shields.io/badge/Database-MongoDB-green.svg?Database=MonogBD)
+![Language:JavaScript](https://img.shields.io/badge/Language-Javascript-orange.svg?style=flate)
+![Language:Node](https://img.shields.io/badge/Language-Node-green.svg?style=flate)
+![Database:MongoDB](https://img.shields.io/badge/Database-MongoDB-green.svg?style=flate)
 ![License:GPL](https://img.shields.io/cran/l/devtools.svg)
 
 ```
