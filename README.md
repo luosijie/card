@@ -1,9 +1,9 @@
 ## 一个简单的图片处理网站
 
-![Language:JavaScript](https://img.shields.io/badge/Language-Javascript-orange.svg?style=flate)
+![Language:JavaScript](https://img.shields.io/badge/Language-Javascript-yellow.svg?style=flate)
 ![Language:Node](https://img.shields.io/badge/Language-Node-green.svg?style=flate)
 ![Database:MongoDB](https://img.shields.io/badge/Database-MongoDB-green.svg?style=flate)
-![License:GPL](https://img.shields.io/cran/l/devtools.svg)
+![License:GPL](https://img.shields.io/badge/License-GPL-blue.svg?style=flate)
 
 
 ![home](https://github.com/luosijie/Front-end-Blog/blob/master/img/a.PNG?raw=true)
