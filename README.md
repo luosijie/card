@@ -2,7 +2,7 @@
 
 ![Language:JavaScript](https://img.shields.io/badge/Language-%20JavaScript%20-orange.svg)
 ![Language:Node](https://img.shields.io/badge/Language-%20Node%20-green.svg)
-![Database:MongoDB](https://img.shields.io/badge/style-plastic-green.svg?Database=MonogBD)
+![Database:MongoDB](https://img.shields.io/badge/Database-MongoDB-green.svg?Database=MonogBD)
 ![License:GPL](https://img.shields.io/cran/l/devtools.svg)
 
 ```
