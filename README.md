@@ -1,8 +1,9 @@
 ## 一个简单的图片处理网站
 
-![language:javascript](https://img.shields.io/badge/Language-%20JavaScript%20-orange.svg)
-![language:node](https://img.shields.io/badge/Language-%20Node%20-green.svg)
-![](https://img.shields.io/cran/l/devtools.svg)
+![Language:JavaScript](https://img.shields.io/badge/Language-%20JavaScript%20-orange.svg)
+![Language:Node](https://img.shields.io/badge/Language-%20Node%20-green.svg)
+![Database:MongoDB](https://img.shields.io/badge/style-plastic-green.svg?Database=MonogBD)
+![License:GPL](https://img.shields.io/cran/l/devtools.svg)
 
 ```
 通过管理员编辑上传名片模板
