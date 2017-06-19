@@ -1,15 +1,28 @@
-### 提交日志
-2017-6-18 9：25 修复网站只能注册一个用户的问题
-
-------
-
-![home](https://github.com/luosijie/Front-end-Blog/blob/master/img/a.PNG?raw=true)
 ## 一个简单的图片处理网站
+
+![language:javascript](https://img.shields.io/badge/Language-%20JavaScript%20-orange.svg)
+![language:node](https://img.shields.io/badge/Language-%20Node%20-green.svg)
+![](https://img.shields.io/cran/l/devtools.svg)
 
 ```
 通过管理员编辑上传名片模板
 可以让用户在线编辑并下载png格式图片直接打印
 ```
+
+
+
+![home](https://github.com/luosijie/Front-end-Blog/blob/master/img/a.PNG?raw=true)
+
+
+### 提交日志
+2017-6-18 9：25 修复网站只能注册一个用户的问题
+
+------
+
+
+
+
+
 
 ## 安装
 1. 安装MongoDB并成功启动
