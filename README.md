@@ -9,7 +9,7 @@
 ![home](https://github.com/luosijie/Front-end-Blog/blob/master/img/a.PNG?raw=true)
 
 
-### 提交日志
+## 提交日志
 2017-6-18 9：25 修复网站只能注册一个用户的问题
 
 
